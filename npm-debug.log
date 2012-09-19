@@ -1,0 +1,45 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'htonl' ]
+2 info using npm@1.1.61
+3 info using node@v0.8.9
+4 verbose read json /Users/ben/dev/projects/node/owfs/package.json
+5 warn package.json owfs@0.0.0 No README.md file found!
+6 verbose read json /Users/ben/dev/projects/node/owfs/node_modules/express/package.json
+7 verbose from cache /Users/ben/dev/projects/node/owfs/package.json
+8 verbose readDependencies using package.json deps
+9 verbose cache add [ 'htonl', null ]
+10 silly cache add name=undefined spec="htonl" args=["htonl",null]
+11 verbose parsed url { pathname: 'htonl', path: 'htonl', href: 'htonl' }
+12 silly lockFile 0c27c5b9-htonl htonl
+13 verbose lock htonl /Users/ben/.npm/0c27c5b9-htonl.lock
+14 silly lockFile 0c27c5b9-htonl htonl
+15 verbose addNamed [ 'htonl', '' ]
+16 verbose addNamed [ null, '' ]
+17 silly lockFile 5622b0dc-htonl htonl@
+18 verbose lock htonl@ /Users/ben/.npm/5622b0dc-htonl.lock
+19 silly addNameRange { name: 'htonl', range: '', hasData: false }
+20 verbose url raw htonl
+21 verbose url resolving [ 'https://registry.npmjs.org/', './htonl' ]
+22 verbose url resolved https://registry.npmjs.org/htonl
+23 info trying registry request attempt 1 at 20:30:54
+24 http GET https://registry.npmjs.org/htonl
+25 http 404 https://registry.npmjs.org/htonl
+26 silly registry.get cb [ 404,
+26 silly registry.get   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+26 silly registry.get     date: 'Wed, 19 Sep 2012 18:30:56 GMT',
+26 silly registry.get     'content-type': 'application/json',
+26 silly registry.get     'content-length': '52',
+26 silly registry.get     'cache-control': 'must-revalidate' } ]
+27 silly lockFile 5622b0dc-htonl htonl@
+28 error 404 'htonl' is not in the npm registry.
+28 error 404 You should bug the author to publish it
+28 error 404
+28 error 404 Note that you can also install from a
+28 error 404 tarball, folder, or http url, or git url.
+29 error System Darwin 12.1.0
+30 error command "node" "/usr/local/bin/npm" "install" "htonl"
+31 error cwd /Users/ben/dev/projects/node/owfs
+32 error node -v v0.8.9
+33 error npm -v 1.1.61
+34 error code E404
+35 verbose exit [ 1, true ]
