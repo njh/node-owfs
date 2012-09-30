@@ -5,7 +5,12 @@ var HOST = 'raspberrypi';
 var PORT = 4304;
 var c = new Client(HOST, PORT);
 
-c.read('/bus.0/10.E89C8A020800/temperature');
-c.on("message", function(message){
-	console.log("event",message);
-})
+/*c.dir('/10.E89C8A020800', function(result){
+	console.log(result);
+});*/
+/*c.write('/10.E89C8A020800/temperature', 1, function(result){
+	console.log(result);
+});*/
+c.read('/10.E89C8A020800/temperature', function(result){
+	console.log(result);
+});
