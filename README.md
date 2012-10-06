@@ -4,6 +4,10 @@ owfs
 A node.js client library to owserver (Documentation & protocol specs at http://www.owfs.org)
 Currently supported operations: dir, read and write
 
+Installation
+============
+	npm install owfs
+
 Examples
 ========
 
