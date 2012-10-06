@@ -1,4 +1,4 @@
-var Client = require("./owfs").Client;
+var Client = require("../owfs").Client;
 var net = require("net");
 var argv = require('optimist').argv;
 
@@ -13,13 +13,8 @@ c.dir('/', function(result){
 		console.log(res2)
 	})
 });
-/*
-c.write('/simultaneous/temperature', 1, function(){
-	setTimeout(function(){
-		c.read('/10.E89C8A020800/temperature', function(result){
-			console.log(result);
-		});
-	}, 1000);
 
-});*/
+c.read('/10.67C6697351FF/temperature', function(result){
+	console.log(result);
+});
 
