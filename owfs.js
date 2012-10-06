@@ -36,11 +36,9 @@ function Client(server, port){
         return new Client();
     }
     
-    //events.EventEmitter.call(this);
     this._server = server;
     this._port = port;
 }
-//sys.inherits(Client, events.EventEmitter);
 
 function _send(path,fun, callback){
     var socket = new net.Socket({type:'tcp4'});
@@ -106,7 +104,7 @@ Client.prototype.dir = function(path, callback){
                 return line.replace(new RegExp("[\u0000-\u001F]", "g"), "");
             }).forEach(function(line){
                 if(line){
-                    directories.push(line);
+                    directories = directories.concat(line.split(","));
                 }
             })
         });
