@@ -13,7 +13,7 @@ Examples
 
 First of all you need a connection to a running owserver:
 
-	var Client = require("./owfs").Client;
+	var Client = require("owfs").Client;
 	var con = new Client(HOST,PORT);
 
 dir
