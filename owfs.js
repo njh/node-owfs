@@ -42,7 +42,6 @@ function Client(server, port){
 
 function _send(path,fun, callback){
     var socket = new net.Socket({type:'tcp4'});
-    var _self = this;
     var messages = [];
     socket.on('error', function(error){
         console.log(error);
@@ -80,6 +79,23 @@ function _send(path,fun, callback){
     });
 }
 
+function _dir(method, path, callback){
+    var directories = []
+    _send.call(this,path,method,function(messages){
+        messages.forEach(function(message){
+            var lines = message.payload.split(" ")
+            var temp = lines.map(function(line){
+                return line.replace(new RegExp("[\u0000-\u001F]", "g"), "");
+            }).forEach(function(line){
+                if(line){
+                    directories = directories.concat(line.split(","));
+                }
+            })
+        });
+        callback(directories);
+    });
+}
+
 
 Client.prototype.read = function(path, callback){
     _send.call(this,path,2,function(messages){
@@ -94,22 +110,23 @@ Client.prototype.read = function(path, callback){
 Client.prototype.write = function(path, payload, callback){
     _send.call(this, path+"\u0000"+payload,3, callback);
 }
-
 Client.prototype.dir = function(path, callback){
-    var directories = []
-    _send.call(this,path,7,function(messages){
-        messages.forEach(function(message){
-            var lines = message.payload.split(" ")
-            var temp = lines.map(function(line){
-                return line.replace(new RegExp("[\u0000-\u001F]", "g"), "");
-            }).forEach(function(line){
-                if(line){
-                    directories = directories.concat(line.split(","));
-                }
-            })
-        });
-        callback(directories);
-    });
+    _dir.call(this,4,path,callback);
+}
+
+Client.prototype.dirall = function(path, callback){
+    _dir.call(this,7,path,callback);
+}
+Client.prototype.get = function(path, callback){
+    _dir.call(this,8,path,callback);
+}
+
+Client.prototype.dirallslash = function(path, callback){
+    _dir.call(this,9,path,callback);
+}
+
+Client.prototype.getslash = function(path, callback){
+    _dir.call(this,10,path,callback);
 }
 
 exports.Client = Client;

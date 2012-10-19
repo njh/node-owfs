@@ -1,7 +1,7 @@
 owfs
 ====
 
-A node.js client library to owserver (Documentation & protocol specs at http://www.owfs.org)
+A node.js client library to owserver [Documentation & protocol specs](http://www.owfs.org)
 Currently supported operations: dir, read and write
 
 Installation
@@ -15,14 +15,6 @@ First of all you need a connection to a running owserver:
 
 	var Client = require("owfs").Client;
 	var con = new Client(HOST,PORT);
-
-dir
----
-Lists all the children of the supplied path as an array passed to the callback.
-
-	con.dir("/",function(directories){
-		console.log(directories);
-	})
 
 read
 ----
@@ -38,4 +30,30 @@ Writes a value to the specified path and passes the raw owserver message to the 
 
 	con.write("/10.E89C8A020800/temperature",1,function(message){
 		console.log(message)
+	})
+
+Directory listings
+==================
+According to [OWFS message types](http://owfs.org/index.php?page=owserver-message-types) there are several methods for directory listings. They all have the same argument list but behave a bit different.
+
+Lists all the children of the supplied path as an array passed to the callback.
+
+	con.dir("/",function(directories){
+		console.log(directories);
+	})
+
+	con.dirall("/",function(directories){
+		console.log(directories);
+	})
+
+	con.get("/",function(directories){
+		console.log(directories);
+	})
+
+	con.dirallslash("/",function(directories){
+		console.log(directories);
+	})
+
+	con.getslash("/",function(directories){
+		console.log(directories);
 	})
