@@ -1,8 +1,7 @@
 owfs
 ====
 
-A node.js client library to owserver [Documentation & protocol specs](http://www.owfs.org)
-Currently supported operations: dir, read and write
+A [node.js](nodejs.org) client library to owserver [Documentation & protocol specs](http://www.owfs.org)
 
 Installation
 ============
