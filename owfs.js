@@ -3,9 +3,6 @@ var net = require('net'),
     events = require('events');
 require('buffertools');
 
-var HOST = 'raspberrypi.fritz.box';
-var PORT = 4304;
-
 // Convert an integer to an array of "bytes" in network/big-endian order.
 function htonl(n)
 {
@@ -99,10 +96,15 @@ function _dir(method, path, callback){
 
 Client.prototype.read = function(path, callback){
     _send.call(this,path,2,function(messages){
-        var messageToUse = messages.filter(function(message){
-            return message.header.payload > 0;
-        })
-        var result = messageToUse[0].payload.replace(new RegExp(" ", "g"), "");
+        if(messages.length > 1){
+            //Sometimes there are multiple result packages. I don't know why!
+            var messageToUse = messages.filter(function(message){
+                return message.header.payload > 0;
+            })[0]
+        } else {
+            var messageToUse = messages[0];
+        }
+        var result = messageToUse.payload.replace(new RegExp(" ", "g"), "");
         callback(result);
     });
 }
