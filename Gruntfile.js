@@ -26,25 +26,21 @@ module.exports = function(grunt) {
         src: ['lib/**/*.js', 'test/**/*.js']
       }
     },
-    nodeunit: {
-      files: ['test/**/*_test.js']
-    },
-    watch: {
-      gruntfile: {
-        files: '<%= jshint.gruntfile.src %>',
-        tasks: ['jshint:gruntfile']
-      },
-      lib_test: {
-        files: '<%= jshint.lib_test.src %>',
-        tasks: ['jshint:lib_test', 'nodeunit']
-      }
-    }
+    cafemocha: {
+
+        src: 'test/*.js',
+        options: {
+            ui: 'tdd',
+            reporter: 'nyan',
+        },
+  },
   });
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-cafe-mocha');
 
   // Default task.
-  grunt.registerTask('default', ['jshint']);
+  grunt.registerTask('default', ['jshint', 'cafemocha']);
 
 };
