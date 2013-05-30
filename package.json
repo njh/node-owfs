@@ -2,7 +2,7 @@
   "name": "owfs",
   "version": "0.0.4",
   "description": "A client library for the one wire server protocol",
-  "main": "owfs.js",
+  "main": "lib/owfs.js",
   "keywords": [
     "owfs",
     "ds1820"
@@ -19,5 +19,9 @@
   "dependencies": {
     "buffertools": "~1.1.0",
     "network-byte-order": "~0.1.1"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.5.4"
   }
 }
