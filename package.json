@@ -14,7 +14,7 @@
   "author": "Benedikt Arnold <benedikt.arnold@gmx.net>",
   "license": "BSD",
   "scripts": {
-    "test": "mocha"
+    "test": "./node_modules/.bin/mocha"
   },
   "dependencies": {
     "buffertools": "~1.1.0",
@@ -23,6 +23,7 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.5.4",
-    "grunt-cafe-mocha": "~0.1.4"
+    "grunt-cafe-mocha": "~0.1.4",
+    "mocha": "~1.10.0"
   }
 }
