@@ -1,3 +1,6 @@
+[![david-dm][2]][1]
+  [1]: https://david-dm.org/benediktarnold/owfs
+  [2]: https://david-dm.org/benediktarnold/owfs.png
 owfs
 ====
 
