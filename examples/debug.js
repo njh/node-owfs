@@ -7,13 +7,9 @@ var PORT = argv.port?argv.port:4304;
 console.log("Connecting to "+HOST+":"+PORT);
 var owfs = new Client(HOST, PORT);
 
-/*c.dir('/', function(result){
-	console.log(result);
-	console.log("dir "+result[0]);
-	c.dir(result[0], function(res2){
-		console.log(res2)
-	})
-});*/
+owfs.dir('/', function(result){
+	console.log("dir",result);
+});
 
 owfs.read('/22.8CE2B3471711/temperature', function(result){
 	console.log("Result 1: "+result);
@@ -22,4 +18,5 @@ owfs.read('/22.8CE2B3471711/temperature', function(result){
 owfs.read('/10.67C6697351FF/temperature', function(result){
 	console.log("Result 2: "+result);
 });
+
 

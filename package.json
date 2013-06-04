@@ -18,11 +18,14 @@
   },
   "dependencies": {
     "buffertools": "~1.1.0",
-    "network-byte-order": "~0.1.1"
+    "network-byte-order": "~0.1.1",
+    "winston": "~0.7.1"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.5.4",
-    "grunt-cafe-mocha": "~0.1.4"
+    "grunt-cafe-mocha": "~0.1.4",
+    "proxyquire": "~0.4.1",
+    "sinon": "~1.7.2"
   }
 }

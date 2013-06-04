@@ -41,6 +41,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-cafe-mocha');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'cafemocha']);
+  grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask('test', ['cafemocha']);
 
 };
