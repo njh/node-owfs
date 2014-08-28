@@ -19,6 +19,7 @@ First of all you need a connection to a running owserver:
 	var con = new Client(HOST,PORT);
 
 or with the default port 4304
+
 	var con = new Client(HOST);
 
 read
