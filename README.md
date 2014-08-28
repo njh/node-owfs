@@ -18,6 +18,9 @@ First of all you need a connection to a running owserver:
 	var Client = require("owfs").Client;
 	var con = new Client(HOST,PORT);
 
+or with the default port 4304
+	var con = new Client(HOST);
+
 read
 ----
 Reads a value of the specified path and passes the value to the callback.

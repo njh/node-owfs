@@ -27,6 +27,27 @@ describe('OWFS Client', function() {
 		}]);
 	}
 
+	describe('Constructor', function(){
+		it('should use host and port parameter', function(done){
+			communicationRead('23');
+			var client = new Client("blablub", 1111);
+			client.read('/some/path', function(value) {
+				assert.equal(value, 23);
+				sinon.assert.calledWith(sendCommandStub, sinon.match({ command: 2, server:"blablub", port:1111, path:"/some/path" }));
+				done();
+			});
+		});
+		it('should use default port 4304', function(done){
+			communicationRead('23');
+			var client = new Client("blablub");
+			client.read('/some/path', function(value) {
+				assert.equal(value, 23);
+				sinon.assert.calledWith(sendCommandStub, sinon.match({ command: 2, server:"blablub", port:4304, path:"/some/path" }));
+				done();
+			});
+		});
+	});
+
 	describe('#read()', function() {
 		it('should read an integer', function(done) {
 			communicationRead('10');
