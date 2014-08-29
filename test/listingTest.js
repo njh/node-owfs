@@ -11,7 +11,7 @@ describe('OWFS Client', function(){
 	var owfs = new Client("blablub",4304);
 	before(function(){
 		sendCommandStub=sinon.stub(communicationStub, "sendCommand");
-		sendCommandStub.callsArgWith(1,[{payload:payloadResult}]);
+		sendCommandStub.callsArgWith(1,null,[{payload:payloadResult}]);
 	});
 	describe('#dir()', function(){
 		it('should send dir (4) command', function(done){
@@ -22,7 +22,8 @@ describe('OWFS Client', function(){
 			sinon.assert.calledWith(sendCommandStub, sinon.match({ command: 4, server:"blablub", port:4304, path:"/some/path" }));
 		});
 		it('should pass 4 directories to callback', function(){
-			owfs.dir("/some/path", function(directories){
+			owfs.dir("/some/path", function(error,directories){
+				assert.ok(!error);
 				assert.ok(directories, "directories");
 				assert.equal(directories.length, 4);
 			});
