@@ -4,9 +4,9 @@ exports.extractValue = (callback) ->
 		if !error 
 	        if messages.length > 1
 	            logger.warn("Received multiple messages in simple read", messages) ;
-	            messageToUse = messages.filter((message) ->
+	            messageToUse = messages.filter (message) ->
 	                message.header.payload > 0;
-	            ) [0]
+	            [0]
 	        else
 	        	messageToUse = messages[0]
 	        result = messageToUse.payload.replace(new RegExp(" ", "g"), "") ;
