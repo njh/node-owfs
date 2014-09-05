@@ -1,55 +1,48 @@
+#require 'coffee-script'
 communication = require '../lib/base/communication'
+convert = require './base/convert'
 
-extractValue = (callback) ->
-	(error, messages) ->
-		if !error 
-	        if messages.length > 1
-	            #logger.warn("Received multiple messages in simple read", messages) ;
-	            messageToUse = messages.filter((message) ->
-	                message.header.payload > 0;
-	            ) [0]
-	        else
-	        	messageToUse = messages[0]
-	        result = messageToUse.payload.replace(new RegExp(" ", "g"), "") ;
-	        callback(error, result) 
-	    else 
-	        callback(error) 
+class Client
+	constructor: (@server, @port)->
 
-extractDirectoriesFromMessage = (message)->
-	lines = message.payload.split(" ")
-	(line.replace(new RegExp("[\u0000-\u001F]", "g"), "") for line in lines)
+	_dir: (path,fun, callback) ->
+		command =
+			path: path
+			command: fun
+			server: @server
+			port: @port
+		communication.sendCommand(command, convert.extractDirectories(callback))
 
-extractDirectories = (callback) ->
-	(err, messages) ->
-		if !err
-			#console.log "len #{messages.length}"
-			directories = messages.map extractDirectoriesFromMessage
-			dir2 = [].concat directories...
-			callback(err, dir2)
-		else
-			callback(err)
+	read: (path, callback) ->
+		command =
+			path: path
+			command: 2
+			server: @server
+			port: @port
+		communication.sendCommand(command, convert.extractValue(callback))
+
+	write: (path, payload, callback) ->
+		command =
+			path: path + "\u0000" + payload
+			command: 3
+			server: @server
+			port: @port
+		communication.sendCommand(command, callback)
+
+	dir: (path, callback) ->
+		this._dir(path, 4, callback)
+
+	dirall: (path, callback) ->
+		this._dir(path, 7, callback)
+
+	get: (path, callback) ->
+		this._dir(path, 8, callback)
+
+	dirallslash: (path, callback) ->
+		this._dir(path, 9, callback)
+
+	getslash: (path, callback) ->
+		this._dir(path, 10, callback)
 
 
-read = (path, callback) ->
-	command =
-		path: path
-		command: 2
-		server: 'localhost'
-		port: 4304
-	communication.sendCommand(command, extractValue(callback))
-
-dir = (path, callback) ->
-	command =
-		path: path
-		command: 4
-		server: 'localhost'
-		port: 4304
-	communication.sendCommand(command, extractDirectories(callback))
-
-#read('/10.A7F1D92A82C8/temperature', (err, value) ->
-#	console.log("value")
-#	console.log value
-#	)
-dir("/", (err,directories)-> console.log directories)
-
-#communication.sendCommand
+exports.Client = Client

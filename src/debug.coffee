@@ -1,0 +1,12 @@
+Client = require('./owfs').Client
+logger = require("winston")
+
+logger.cli()
+
+logger.remove(logger.transports.Console)
+logger.add(logger.transports.Console, { level: 'debug', colorize:true })
+
+owfs = new Client('localhost',4304)
+
+owfs.dir '/',(err, directories)->
+	logger.info directories
