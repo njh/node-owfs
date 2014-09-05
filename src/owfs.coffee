@@ -1,5 +1,5 @@
 #require 'coffee-script'
-communication = require '../lib/base/communication'
+communication = require './base/communication'
 convert = require './base/convert'
 
 class Client
