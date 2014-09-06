@@ -16,24 +16,35 @@ before(function() {
 		payload: payloadResult
 	}]);
 });
-describe('#dir()', function() {
-	it('should send dir (4) command', function(done) {
-		owfs.dir("/some/path", function() {
-			done();
+var listingCommands = {
+	"dir": 4,
+	"dirall": 7,
+	"get": 8,
+	"dirallslash": 9,
+	"getslash": 10
+};
+Object.keys(listingCommands).forEach(function(command) {
+	describe('#'+command+'()', function() {
+		var fun = listingCommands[command];
+		it('should send ('+fun+') command', function(done) {
+			owfs[command]("/some/path", function() {
+				done();
+			});
+			assert.ok(sendCommandStub.called);
+			sinon.assert.calledWith(sendCommandStub, sinon.match({
+				command: fun,
+				server: "blablub",
+				port: 4304,
+				path: "/some/path"
+			}));
 		});
-		assert.ok(sendCommandStub.called);
-		sinon.assert.calledWith(sendCommandStub, sinon.match({
-			command: 4,
-			server: "blablub",
-			port: 4304,
-			path: "/some/path"
-		}));
-	});
-	it('should pass 4 directories to callback', function() {
-		owfs.dir("/some/path", function(error, directories) {
-			assert.ok(!error);
-			assert.ok(directories, "directories");
-			assert.equal(directories.length, 4);
+
+		it(command + ' should pass 4 directories to callback', function() {
+			owfs[command]("/some/path", function(error, directories) {
+				assert.ok(!error);
+				assert.ok(directories, "directories");
+				assert.equal(directories.length, 4);
+			});
 		});
 	});
 });
