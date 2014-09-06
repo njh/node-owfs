@@ -3,7 +3,7 @@ communication = require './base/communication'
 convert = require './base/convert'
 
 class Client
-	constructor: (@server, @port)->
+	constructor: (@server, @port=4304) ->
 
 	_dir: (path,fun, callback) ->
 		command =

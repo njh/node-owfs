@@ -17,21 +17,21 @@ owfs.dir('/', function(err, result){
 	logger.info("dir",result);
 });
 
-owfs.get('/', function(err, result){
+/*owfs.get('/', function(err, result){
 	logger.info("get",result);
 });
 
 owfs.getslash('/', function(err, result){
 	logger.info("getslash",result);
-});
+});*/
 
-owfs.read('/10.A7F1D92A82C8/temperature', function(err, result){
+/*owfs.read('/10.6CC351E220AE/temperature', function(err, result){
 	logger.info("Result 1: "+result);
-});
+});*/
 
-owfs.read('/10.A7F1D92A82C/temperature', function(err, result){
+/*owfs.read('/10.A7F1D92A82C/temperature', function(err, result){
 	logger.error("Error: ",err);
 	logger.info("No result",result);
-});
+});*/
 
 

@@ -27,21 +27,47 @@ module.exports = function(grunt) {
       }
     },
     cafemocha: {
-
-        src: 'test/*.js',
+      js: 'test/*.js',
+      options: {
+        ui: 'tdd',
+        reporter: 'nyan',
+      },
+    },
+    coffee: {
+      build: {
+        expand: true,
+        cwd: 'src',
+        src: ['**/*.coffee'],
+        dest: 'build',
+        ext: '.js',
         options: {
-            ui: 'tdd',
-            reporter: 'nyan',
+          sourceMap: true
         },
-  },
+      }
+    },
+    coffeelint: {
+      src: ['src/**/*.coffee'],
+      options: {
+        "no_tabs": {
+          "level": "ignore"
+        },
+        "indentation": {
+          "value": 1,
+          "level": "error"
+        },
+      }
+    },
   });
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-cafe-mocha');
+  grunt.loadNpmTasks('grunt-contrib-coffee');
+  grunt.loadNpmTasks('grunt-coffeelint');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask('default', ['coffeelint', 'coffee', 'test']);
+
   grunt.registerTask('test', ['cafemocha']);
 
 };

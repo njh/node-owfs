@@ -1,0 +1,88 @@
+(function() {
+  var buffertools, header_props, htonl, logger, net, ntohl, sendCommand, sendCommandToSocket;
+
+  net = require('net');
+
+  ntohl = require('network-byte-order').ntohl;
+
+  htonl = require('network-byte-order').htonl;
+
+  logger = require('winston');
+
+  buffertools = require('buffertools');
+
+  header_props = ["version", "payload", "ret", "controlflags", "size", "offset"];
+
+  sendCommandToSocket = function(options, socket, callback) {
+    var callbackOnce, called, messages, path;
+    messages = [];
+    path = options.path;
+    called = false;
+    callbackOnce = function(error, data) {
+      if (!called) {
+        callback(error, data);
+        return called = true;
+      }
+    };
+    socket.on('error', function(error) {
+      logger.error(error);
+      return callbackOnce(error);
+    });
+    socket.on('end', function() {
+      return callbackOnce(null, messages);
+    });
+    socket.on('data', function(data) {
+      var header, header_prop, i, message, payload, value, _i, _len;
+      header = {};
+      for (i = _i = 0, _len = header_props.length; _i < _len; i = ++_i) {
+        header_prop = header_props[i];
+        value = ntohl(data, i * 4);
+        header[header_prop] = value;
+      }
+      payload = data.slice(24).toString('utf8');
+      message = {
+        header: header,
+        payload: payload
+      };
+      logger.log('debug', "Receiving header", header);
+      logger.log('debug', "Receiving payload", payload);
+      if (header.ret < 0) {
+        callbackOnce({
+          msg: "Communication Error. Received " + header.ret,
+          header: header,
+          options: options
+        });
+      }
+      return messages.push(message);
+    });
+    return socket.connect(options.port, options.server, function() {
+      var bres, data_len, msg;
+      logger.debug("Sending", options);
+      data_len = 8192;
+      msg = new Buffer(24);
+      htonl(msg, 0, 0);
+      htonl(msg, 4, path.length + 1);
+      htonl(msg, 8, options.command);
+      htonl(msg, 12, 0x00000020);
+      htonl(msg, 16, data_len);
+      htonl(msg, 20, 0);
+      bres = buffertools.concat(msg, path + "\x00");
+      return socket.end(bres);
+    });
+  };
+
+  sendCommand = function(options, callback) {
+    var socket;
+    socket = new net.Socket({
+      type: 'tcp4'
+    });
+    return sendCommandToSocket(options, socket, callback);
+  };
+
+  exports.sendCommand = sendCommand;
+
+  exports.sendCommandToSocket = sendCommandToSocket;
+
+}).call(this);
+
+//# sourceMappingURL=communication.js.map

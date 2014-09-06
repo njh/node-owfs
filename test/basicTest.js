@@ -3,7 +3,7 @@ var assert = require("assert"),
 	proxyquire = require('proxyquire');
 
 var communicationStub = {};
-var Client = proxyquire('../lib/owfs', {
+var Client = proxyquire('../build/owfs', {
 	'./base/communication': communicationStub
 }).Client;
 var sendCommandStub;
