@@ -1,8 +1,8 @@
 {
   "name": "owfs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A client library for the one wire server protocol",
-  "main": "lib/owfs.js",
+  "main": "build/owfs.js",
   "keywords": [
     "owfs",
     "ds1820"

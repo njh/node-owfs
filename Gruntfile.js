@@ -22,8 +22,8 @@ module.exports = function(grunt) {
       gruntfile: {
         src: 'Gruntfile.js'
       },
-      lib_test: {
-        src: ['lib/**/*.js', 'test/**/*.js']
+      test: {
+        src: ['test/**/*.js']
       }
     },
     cafemocha: {
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-coffeelint');
 
   // Default task.
-  grunt.registerTask('default', ['coffeelint', 'coffee', 'test']);
+  grunt.registerTask('default', ['jshint','coffeelint', 'coffee', 'test']);
 
   grunt.registerTask('test', ['cafemocha']);
 
