@@ -17,8 +17,9 @@ exports.extractValue = (callback) ->
 extractDirectoriesFromMessage = (message)->
 	exp = new RegExp("[\u0000-\u001F]", "g")
 	lines = message.payload.replace(exp, "").split(" ")
-	lines.filter (line)->
+	lines = lines.filter (line)->
 		not not line
+	lines.join(",").split ","
 
 exports.extractDirectories = (callback) ->
 	logger.debug "extractDirectories"
@@ -27,7 +28,6 @@ exports.extractDirectories = (callback) ->
 		if !err
 			directories = messages.map extractDirectoriesFromMessage
 			logger.debug "extracted directories", directories
-			dir2 = [].concat directories...
-			callback(err, dir2)
+			callback(err, [].concat directories...)
 		else
 			callback(err)

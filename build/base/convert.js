@@ -28,21 +28,21 @@
     var exp, lines;
     exp = new RegExp("[\u0000-\u001F]", "g");
     lines = message.payload.replace(exp, "").split(" ");
-    return lines.filter(function(line) {
+    lines = lines.filter(function(line) {
       return !!line;
     });
+    return lines.join(",").split(",");
   };
 
   exports.extractDirectories = function(callback) {
     logger.debug("extractDirectories");
     return function(err, messages) {
-      var dir2, directories, _ref;
+      var directories, _ref;
       logger.debug(messages);
       if (!err) {
         directories = messages.map(extractDirectoriesFromMessage);
         logger.debug("extracted directories", directories);
-        dir2 = (_ref = []).concat.apply(_ref, directories);
-        return callback(err, dir2);
+        return callback(err, (_ref = []).concat.apply(_ref, directories));
       } else {
         return callback(err);
       }
