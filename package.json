@@ -19,7 +19,7 @@
   "dependencies": {
     "buffertools": "~2.1.2",
     "network-byte-order": "~0.2.0",
-    "winston": "~0.7.2"
+    "winston": "~0.8.0"
   },
   "devDependencies": {
     "coffeelint": "^1.6.0",
