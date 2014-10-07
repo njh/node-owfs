@@ -1,9 +1,9 @@
-logger = require "winston"
+debug = require("debug")("owfs:convert")
 exports.extractValue = (callback) ->
 	(error, messages) ->
 		if !error
 			if messages.length > 1
-				logger.warn("Received multiple messages in simple read", messages)
+				debug("Received multiple messages in simple read"+ messages)
 				messageToUse = messages.filter (message) ->
 					message.header.payload > 0
 				[0]
@@ -22,12 +22,13 @@ extractDirectoriesFromMessage = (message)->
 	lines.join(",").split ","
 
 exports.extractDirectories = (callback) ->
-	logger.debug "extractDirectories"
+	debug "extractDirectories"
 	(err, messages) ->
-		logger.debug messages
+		debug messages
 		if !err
 			directories = messages.map extractDirectoriesFromMessage
-			logger.debug "extracted directories", directories
+			debug "extracted directories"
+			debug directories
 			callback(err, [].concat directories...)
 		else
 			callback(err)

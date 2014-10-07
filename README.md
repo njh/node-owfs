@@ -39,7 +39,7 @@ Writes a value to the specified path and passes the raw owserver message to the 
 	})
 
 Directory listings
-==================
+------------------
 According to [OWFS message types](http://owfs.org/index.php?page=owserver-message-types) there are several methods for directory listings. They all have the same argument list but behave a bit different.
 
 Lists all the children of the supplied path as an array passed to the callback.
@@ -63,3 +63,10 @@ Lists all the children of the supplied path as an array passed to the callback.
 	con.getslash("/",function(err, directories){
 		console.log(directories);
 	})
+
+Debug
+=====
+We are using [debug](https://github.com/visionmedia/debug) for debugging output. If you are using owfs in your app, start the debug mode like this:
+
+	DEBUG=owfs* node app.js
+	

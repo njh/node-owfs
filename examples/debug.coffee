@@ -1,4 +1,4 @@
-Client = require('./owfs').Client
+Client = require('../src/owfs').Client
 logger = require("winston")
 
 logger.cli()

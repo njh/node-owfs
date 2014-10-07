@@ -1,6 +1,6 @@
 {
   "name": "owfs",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A client library for the one wire server protocol",
   "main": "build/owfs.js",
   "keywords": [
@@ -18,8 +18,8 @@
   },
   "dependencies": {
     "buffertools": "~2.1.2",
-    "network-byte-order": "~0.2.0",
-    "winston": "~0.8.0"
+    "debug": "^2.0.0",
+    "network-byte-order": "~0.2.0"
   },
   "devDependencies": {
     "coffeelint": "^1.6.0",

@@ -1,14 +1,14 @@
 (function() {
-  var extractDirectoriesFromMessage, logger;
+  var debug, extractDirectoriesFromMessage;
 
-  logger = require("winston");
+  debug = require("debug")("owfs:convert");
 
   exports.extractValue = function(callback) {
     return function(error, messages) {
       var messageToUse, result;
       if (!error) {
         if (messages.length > 1) {
-          logger.warn("Received multiple messages in simple read", messages);
+          debug("Received multiple messages in simple read" + messages);
           messageToUse = messages.filter(function(message) {
             return message.header.payload > 0;
           });
@@ -35,13 +35,14 @@
   };
 
   exports.extractDirectories = function(callback) {
-    logger.debug("extractDirectories");
+    debug("extractDirectories");
     return function(err, messages) {
       var directories, _ref;
-      logger.debug(messages);
+      debug(messages);
       if (!err) {
         directories = messages.map(extractDirectoriesFromMessage);
-        logger.debug("extracted directories", directories);
+        debug("extracted directories");
+        debug(directories);
         return callback(err, (_ref = []).concat.apply(_ref, directories));
       } else {
         return callback(err);

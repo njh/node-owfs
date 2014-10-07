@@ -1,5 +1,5 @@
 (function() {
-  var buffertools, header_props, htonl, logger, net, ntohl, sendCommand, sendCommandToSocket;
+  var buffertools, debug, header_props, htonl, net, ntohl, sendCommand, sendCommandToSocket;
 
   net = require('net');
 
@@ -7,7 +7,7 @@
 
   htonl = require('network-byte-order').htonl;
 
-  logger = require('winston');
+  debug = require('debug')('owfs:communication');
 
   buffertools = require('buffertools');
 
@@ -25,7 +25,7 @@
       }
     };
     socket.on('error', function(error) {
-      logger.error(error);
+      debug(error);
       return callbackOnce(error);
     });
     socket.on('end', function() {
@@ -44,8 +44,8 @@
         header: header,
         payload: payload
       };
-      logger.log('debug', "Receiving header", header);
-      logger.log('debug', "Receiving payload", payload);
+      debug("Receiving header " + header);
+      debug("Receiving payload " + payload);
       if (header.ret < 0) {
         callbackOnce({
           msg: "Communication Error. Received " + header.ret,
@@ -57,7 +57,7 @@
     });
     return socket.connect(options.port, options.server, function() {
       var bres, data_len, msg;
-      logger.debug("Sending", options);
+      debug("Sending" + options);
       data_len = 8192;
       msg = new Buffer(24);
       htonl(msg, 0, 0);

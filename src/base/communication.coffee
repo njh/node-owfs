@@ -1,7 +1,7 @@
 net = require 'net'
 ntohl = require('network-byte-order').ntohl
 htonl = require('network-byte-order').htonl
-logger = require 'winston'
+debug = require('debug')('owfs:communication')
 buffertools = require 'buffertools'
 
 header_props = ["version","payload", "ret", "controlflags", "size", "offset"]
@@ -16,7 +16,7 @@ sendCommandToSocket = (options, socket, callback) ->
 			called = true
 
 	socket.on 'error', (error) ->
-		logger.error(error)
+		debug error
 		callbackOnce(error)
 
 	socket.on 'end', ->
@@ -32,8 +32,8 @@ sendCommandToSocket = (options, socket, callback) ->
 		message =
 			header: header
 			payload: payload
-		logger.log('debug', "Receiving header", header)
-		logger.log('debug', "Receiving payload", payload)
+		debug("Receiving header " +header)
+		debug("Receiving payload " +payload)
 		if header.ret < 0
 			callbackOnce
 				msg: "Communication Error. Received #{header.ret}"
@@ -42,7 +42,7 @@ sendCommandToSocket = (options, socket, callback) ->
 		messages.push(message)
 
 	socket.connect options.port, options.server, ->
-		logger.debug("Sending", options)
+		debug("Sending"+options)
 		data_len = 8192
 		msg = new Buffer(24)
 		htonl(msg, 0, 0) #version
