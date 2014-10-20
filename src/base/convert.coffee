@@ -15,11 +15,14 @@ exports.extractValue = (callback) ->
 			callback(error)
 
 extractDirectoriesFromMessage = (message)->
-	exp = new RegExp("[\u0000-\u001F]", "g")
-	lines = message.payload.replace(exp, "").split(" ")
-	lines = lines.filter (line)->
-		not not line
-	lines.join(",").split ","
+	if not not message.payload
+		exp = new RegExp("[\u0000-\u001F]", "g")
+		lines = message.payload.replace(exp, "").split(" ")
+		lines = lines.filter (line)->
+			not not line
+		lines.join(",").split ","
+	else
+		[]
 
 exports.extractDirectories = (callback) ->
 	debug "extractDirectories"

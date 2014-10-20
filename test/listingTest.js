@@ -4,6 +4,7 @@ var assert = require("assert"),
 
 var payloadResult = '/01.A7F1D92A82C8\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0011\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0010\u0000\u0000\u0000\u0000/10.D8FE434D9855\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0011\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0010\u0000\u0000\u0000\u0000/22.8CE2B3471711\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0011\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0010\u0000\u0000\u0000\u0000/29.98542F112D05\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0000\u0000\u0000';
 var payload2 = '/10.A7F1D92A82C8,/10.D8FE434D9855,/10.8CE2B3471711,/10.98542F112D05,/10.58F56BD68807,/10.999248336241';
+var emptyPayload = '';
 
 var communicationStub = {};
 var Client = proxyquire('../build/owfs', {
@@ -68,6 +69,17 @@ Object.keys(listingCommands).forEach(function(command) {
 				assert.ok(!error);
 				assert.ok(directories, "directories");
 				assert.equal(directories.length, 6);
+			});
+		});
+	});
+	describe('#' + command + '() with empty payload', function() {
+		before(stubWithPayload(emptyPayload));
+		after(restore());
+		it(command+' should pass 0 directories to callback', function(){
+			owfs[command]("/some/path", function(error, directories) {
+				assert.ok(!error);
+				assert.ok(directories, "directories");
+				assert.equal(directories.length, 0);
 			});
 		});
 	});

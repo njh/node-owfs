@@ -26,12 +26,16 @@
 
   extractDirectoriesFromMessage = function(message) {
     var exp, lines;
-    exp = new RegExp("[\u0000-\u001F]", "g");
-    lines = message.payload.replace(exp, "").split(" ");
-    lines = lines.filter(function(line) {
-      return !!line;
-    });
-    return lines.join(",").split(",");
+    if (!!message.payload) {
+      exp = new RegExp("[\u0000-\u001F]", "g");
+      lines = message.payload.replace(exp, "").split(" ");
+      lines = lines.filter(function(line) {
+        return !!line;
+      });
+      return lines.join(",").split(",");
+    } else {
+      return [];
+    }
   };
 
   exports.extractDirectories = function(callback) {
