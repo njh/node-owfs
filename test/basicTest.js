@@ -1,13 +1,13 @@
 var assert = require("assert"),
-	sinon = require("sinon"),
-	proxyquire = require('proxyquire');
+	sinon = require("sinon");
 
-var communicationStub = {};
-var Client = proxyquire('../build/owfs', {
-	'./base/communication': communicationStub
-}).Client;
+var communicationStub = {
+	sendCommand: function(){
+
+	}
+};
+var Client = require('../build/owfs').Client;
 var sendCommandStub;
-var owfs = new Client("blablub", 4304);
 
 var sandbox;
 beforeEach(function() {
@@ -29,7 +29,7 @@ function communicationRead(value) {
 describe('Constructor', function() {
 	it('should use host and port parameter', function(done) {
 		communicationRead('23');
-		var client = new Client("blablub", 1111);
+		var client = new Client("blablub", 1111, communicationStub);
 		client.read('/some/path', function(error, value) {
 			assert.ok(!error);
 			assert.equal(value, 23);
@@ -44,7 +44,7 @@ describe('Constructor', function() {
 	});
 	it('should use default port 4304', function(done) {
 		communicationRead('23');
-		var client = new Client("blablub");
+		var client = new Client("blablub",null,communicationStub);
 		client.read('/some/path', function(error, value) {
 			assert.ok(!error);
 			assert.equal(value, 23);
@@ -60,6 +60,7 @@ describe('Constructor', function() {
 });
 
 describe('#read()', function() {
+	var owfs = new Client("blablub", 4304,communicationStub);
 	it('should read an integer', function(done) {
 		communicationRead('10');
 		owfs.read('/some/path', function(error, value) {

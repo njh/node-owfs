@@ -6,9 +6,10 @@
   convert = require('./base/convert');
 
   Client = (function() {
-    function Client(server, port) {
+    function Client(server, port, communication) {
       this.server = server;
       this.port = port != null ? port : 4304;
+      this.communication = communication != null ? communication : communication;
     }
 
     Client.prototype._dir = function(path, fun, callback) {
@@ -19,7 +20,7 @@
         server: this.server,
         port: this.port
       };
-      return communication.sendCommand(command, convert.extractDirectories(callback));
+      return this.communication.sendCommand(command, convert.extractDirectories(callback));
     };
 
     Client.prototype.read = function(path, callback) {
@@ -30,7 +31,7 @@
         server: this.server,
         port: this.port
       };
-      return communication.sendCommand(command, convert.extractValue(callback));
+      return this.communication.sendCommand(command, convert.extractValue(callback));
     };
 
     Client.prototype.write = function(path, payload, callback) {
@@ -41,7 +42,7 @@
         server: this.server,
         port: this.port
       };
-      return communication.sendCommand(command, callback);
+      return this.communication.sendCommand(command, callback);
     };
 
     Client.prototype.dir = function(path, callback) {

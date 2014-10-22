@@ -1,30 +1,38 @@
 var assert = require("assert"),
 	sinon = require("sinon"),
-	proxyquire = require('proxyquire');
+	Client = require('../build/owfs').Client;
 
 var payloadResult = '/01.A7F1D92A82C8\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0011\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0010\u0000\u0000\u0000\u0000/10.D8FE434D9855\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0011\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0010\u0000\u0000\u0000\u0000/22.8CE2B3471711\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0011\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0010\u0000\u0000\u0000\u0000/29.98542F112D05\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0000\u0000\u0000';
-var payload2 = '/10.A7F1D92A82C8,/10.D8FE434D9855,/10.8CE2B3471711,/10.98542F112D05,/10.58F56BD68807,/10.999248336241';
-var emptyPayload = '';
 
-var communicationStub = {};
-var Client = proxyquire('../build/owfs', {
-	'./base/communication': communicationStub
-}).Client;
-var sendCommandStub;
-var owfs = new Client("blablub", 4304);
+var testcases = [{
+	payload: payloadResult,
+	listingEntries: 4,
+	message: ""
+},{
+	payload: '/10.A7F1D92A82C8,/10.D8FE434D9855,/10.8CE2B3471711,/10.98542F112D05,/10.58F56BD68807,/10.999248336241',
+	listingEntries: 6,
+	message: "with 2nd payload "
+},{
+	payload: '',
+	listingEntries: 0,
+	message: "with emptyPayload "
+}];
 
 function stubWithPayload(payload) {
 	return function() {
-		sendCommandStub = sinon.stub(communicationStub, "sendCommand");
+		var communicationStub = {
+			sendCommand: function(){
+
+			}
+		};
+		
+		var sendCommandStub = sinon.stub(communicationStub, "sendCommand");
 		sendCommandStub.callsArgWith(1, null, [{
 			payload: payload
 		}]);
-	};
-}
-
-function restore(){
-	return function(){
-		sendCommandStub.restore();
+		var owfs = new Client("blablub", 4304, communicationStub);
+		
+		return {owfs:owfs, stub: sendCommandStub};
 	};
 }
 
@@ -37,49 +45,33 @@ var listingCommands = {
 };
 Object.keys(listingCommands).forEach(function(command) {
 	describe('#' + command + '()', function() {
-		before(stubWithPayload(payloadResult));
-		after(restore());
+		var res = stubWithPayload(payloadResult)();
 		var fun = listingCommands[command];
 		it('should send (' + fun + ') command', function(done) {
-			owfs[command]("/some/path", function() {
+			res.owfs[command]("/some/path", function() {
 				done();
 			});
-			assert.ok(sendCommandStub.called);
-			sinon.assert.calledWith(sendCommandStub, sinon.match({
+			assert.ok(res.stub.called);
+			sinon.assert.calledWith(res.stub, sinon.match({
 				command: fun,
 				server: "blablub",
 				port: 4304,
 				path: "/some/path"
 			}));
+			res.stub.restore();
 		});
+	});
 
-		it(command + ' should pass 4 directories to callback', function() {
-			owfs[command]("/some/path", function(error, directories) {
-				assert.ok(!error);
-				assert.ok(directories, "directories");
-				assert.equal(directories.length, 4);
-			});
-		});
-	});
-	describe('#' + command + '() with 2nd payload', function() {
-		before(stubWithPayload(payload2));
-		after(restore());
-		it(command+' should pass 6 directories to callback', function(){
-			owfs[command]("/some/path", function(error, directories) {
-				assert.ok(!error);
-				assert.ok(directories, "directories");
-				assert.equal(directories.length, 6);
-			});
-		});
-	});
-	describe('#' + command + '() with empty payload', function() {
-		before(stubWithPayload(emptyPayload));
-		after(restore());
-		it(command+' should pass 0 directories to callback', function(){
-			owfs[command]("/some/path", function(error, directories) {
-				assert.ok(!error);
-				assert.ok(directories, "directories");
-				assert.equal(directories.length, 0);
+	describe('#' + command + '()', function(){
+		testcases.forEach(function(testcase){
+			it(testcase.message+ 'should pass '+testcase.listingEntries+' directories to callback', function() {
+				var res = stubWithPayload(testcase.payload)();
+				res.owfs[command]("/some/path", function(error, directories) {
+					assert.ok(!error);
+					assert.ok(directories, "directories");
+					assert.equal(directories.length, testcase.listingEntries);
+					res.stub.restore();
+				});
 			});
 		});
 	});

@@ -3,7 +3,7 @@ communication = require './base/communication'
 convert = require './base/convert'
 
 class Client
-	constructor: (@server, @port=4304) ->
+	constructor: (@server, @port=4304, @communication=communication) ->
 
 	_dir: (path,fun, callback) ->
 		command =
@@ -11,7 +11,7 @@ class Client
 			command: fun
 			server: @server
 			port: @port
-		communication.sendCommand(command, convert.extractDirectories(callback))
+		@communication.sendCommand(command, convert.extractDirectories(callback))
 
 	read: (path, callback) ->
 		command =
@@ -19,7 +19,7 @@ class Client
 			command: 2
 			server: @server
 			port: @port
-		communication.sendCommand(command, convert.extractValue(callback))
+		@communication.sendCommand(command, convert.extractValue(callback))
 
 	write: (path, payload, callback) ->
 		command =
@@ -27,7 +27,7 @@ class Client
 			command: 3
 			server: @server
 			port: @port
-		communication.sendCommand(command, callback)
+		@communication.sendCommand(command, callback)
 
 	dir: (path, callback) ->
 		this._dir(path, 4, callback)
