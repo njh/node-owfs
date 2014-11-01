@@ -30,8 +30,7 @@ exports.extractDirectories = (callback) ->
 		debug messages
 		if !err
 			directories = messages.map extractDirectoriesFromMessage
-			debug "extracted directories"
-			debug directories
+			debug "extracted directories",directories
 			callback(err, [].concat directories...)
 		else
 			callback(err)

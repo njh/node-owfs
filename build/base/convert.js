@@ -45,8 +45,7 @@
       debug(messages);
       if (!err) {
         directories = messages.map(extractDirectoriesFromMessage);
-        debug("extracted directories");
-        debug(directories);
+        debug("extracted directories", directories);
         return callback(err, (_ref = []).concat.apply(_ref, directories));
       } else {
         return callback(err);

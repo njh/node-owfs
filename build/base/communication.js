@@ -44,8 +44,8 @@
         header: header,
         payload: payload
       };
-      debug("Receiving header " + JSON.stringify(header));
-      debug("Receiving payload " + JSON.stringify(payload));
+      debug("Receiving header", header);
+      debug("Receiving payload", payload);
       if (header.ret < 0) {
         callbackOnce({
           msg: "Communication Error. Received " + header.ret,
@@ -57,7 +57,7 @@
     });
     return socket.connect(options.port, options.server, function() {
       var bres, data_len, msg;
-      debug("Sending" + options);
+      debug("Sending", options);
       data_len = 8192;
       msg = new Buffer(24);
       htonl(msg, 0, 0);
