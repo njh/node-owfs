@@ -1,7 +1,7 @@
 (function() {
-  var Client, communication, convert;
+  var Client, basecommunication, convert;
 
-  communication = require('./base/communication');
+  basecommunication = require('./base/communication');
 
   convert = require('./base/convert');
 
@@ -9,7 +9,7 @@
     function Client(server, port, communication) {
       this.server = server;
       this.port = port != null ? port : 4304;
-      this.communication = communication != null ? communication : communication;
+      this.communication = communication != null ? communication : basecommunication;
     }
 
     Client.prototype._dir = function(path, fun, callback) {

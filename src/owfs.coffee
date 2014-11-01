@@ -1,9 +1,9 @@
 #require 'coffee-script'
-communication = require './base/communication'
+basecommunication = require './base/communication'
 convert = require './base/convert'
 
 class Client
-	constructor: (@server, @port=4304, @communication=communication) ->
+	constructor: (@server, @port=4304, @communication=basecommunication) ->
 
 	_dir: (path,fun, callback) ->
 		command =

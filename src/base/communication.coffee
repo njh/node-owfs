@@ -32,8 +32,8 @@ sendCommandToSocket = (options, socket, callback) ->
 		message =
 			header: header
 			payload: payload
-		debug("Receiving header " +header)
-		debug("Receiving payload " +payload)
+		debug("Receiving header " +JSON.stringify(header))
+		debug("Receiving payload " +JSON.stringify(payload))
 		if header.ret < 0
 			callbackOnce
 				msg: "Communication Error. Received #{header.ret}"
