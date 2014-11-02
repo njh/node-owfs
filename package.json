@@ -22,6 +22,7 @@
     "network-byte-order": "~0.2.0"
   },
   "devDependencies": {
+    "coffee-script": "^1.8.0",
     "coffeelint": "^1.6.0",
     "grunt": "~0.4.1",
     "grunt-cafe-mocha": "~0.1.4",
