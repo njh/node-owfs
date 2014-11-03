@@ -27,11 +27,12 @@ module.exports = function(grunt) {
       }
     },
     cafemocha: {
-      js: 'test/*.js',
+      js: 'test/*',
       options: {
         ui: 'tdd',
         reporter: 'nyan',
-      },
+        compilers: 'coffee:coffee-script/register'
+      }
     },
     coffee: {
       build: {

@@ -3,13 +3,14 @@ exports.extractValue = (callback) ->
 	(error, messages) ->
 		if !error
 			if messages.length > 1
-				debug("Received multiple messages in simple read"+ messages)
+				debug "Received multiple messages in simple read",messages
 				messageToUse = messages.filter (message) ->
+					debug "Checking Header payload > 0",message.header.payload
 					message.header.payload > 0
-				[0]
 			else
-				messageToUse = messages[0]
-			result = messageToUse.payload.replace(new RegExp(" ", "g"), "")
+				messageToUse = messages
+			debug "message to use",messageToUse
+			result = messageToUse[0].payload.replace(new RegExp(" ", "g"), "")
 			callback(error, result)
 		else
 			callback(error)

@@ -8,15 +8,16 @@
       var messageToUse, result;
       if (!error) {
         if (messages.length > 1) {
-          debug("Received multiple messages in simple read" + messages);
+          debug("Received multiple messages in simple read", messages);
           messageToUse = messages.filter(function(message) {
+            debug("Checking Header payload > 0", message.header.payload);
             return message.header.payload > 0;
           });
-          [0];
         } else {
-          messageToUse = messages[0];
+          messageToUse = messages;
         }
-        result = messageToUse.payload.replace(new RegExp(" ", "g"), "");
+        debug("message to use", messageToUse);
+        result = messageToUse[0].payload.replace(new RegExp(" ", "g"), "");
         return callback(error, result);
       } else {
         return callback(error);
