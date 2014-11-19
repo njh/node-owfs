@@ -11,5 +11,5 @@ owfs = new Client('localhost',4304)
 owfs.dir '/',(err, directories)->
 	logger.info directories
 
-owfs.read '/10.D8FE434D9855/temperature', (err,value)->
-	logger.info value
+#owfs.read '/10.D8FE434D9855/temperature', (err,value)->
+#	logger.info value

@@ -1,5 +1,5 @@
 (function() {
-  var buffertools, debug, header_props, htonl, net, ntohl, sendCommand, sendCommandToSocket;
+  var debug, header_props, htonl, net, ntohl, sendCommand, sendCommandToSocket;
 
   net = require('net');
 
@@ -8,8 +8,6 @@
   htonl = require('network-byte-order').htonl;
 
   debug = require('debug')('owfs:communication');
-
-  buffertools = require('buffertools');
 
   header_props = ["version", "payload", "ret", "controlflags", "size", "offset"];
 
@@ -56,18 +54,19 @@
       return messages.push(message);
     });
     return socket.connect(options.port, options.server, function() {
-      var bres, data_len, msg;
+      var bytesWritten, data_len, msg;
       debug("Sending", options);
       data_len = 8192;
-      msg = new Buffer(24);
+      msg = new Buffer(24 + path.length + 1);
       htonl(msg, 0, 0);
       htonl(msg, 4, path.length + 1);
       htonl(msg, 8, options.command);
       htonl(msg, 12, 0x00000020);
       htonl(msg, 16, data_len);
       htonl(msg, 20, 0);
-      bres = buffertools.concat(msg, path + "\x00");
-      return socket.end(bres);
+      bytesWritten = msg.write(path, 24);
+      msg.write("\x00", 24 + bytesWritten);
+      return socket.end(msg);
     });
   };
 

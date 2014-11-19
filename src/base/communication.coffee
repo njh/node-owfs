@@ -2,7 +2,6 @@ net = require 'net'
 ntohl = require('network-byte-order').ntohl
 htonl = require('network-byte-order').htonl
 debug = require('debug')('owfs:communication')
-buffertools = require 'buffertools'
 
 header_props = ["version","payload", "ret", "controlflags", "size", "offset"]
 
@@ -44,7 +43,7 @@ sendCommandToSocket = (options, socket, callback) ->
 	socket.connect options.port, options.server, ->
 		debug "Sending",options
 		data_len = 8192
-		msg = new Buffer(24)
+		msg = new Buffer(24+path.length+1)
 		htonl(msg, 0, 0) #version
 		htonl(msg, 4, path.length + 1) #payload length
 		#type of function call http://owfs.org/index.php?page=owserver-message-types
@@ -52,8 +51,9 @@ sendCommandToSocket = (options, socket, callback) ->
 		htonl(msg, 12, 0x00000020) #format flags -- 266 for alias upport
 		htonl(msg, 16, data_len) #size of data element for read or write
 		htonl(msg, 20, 0)
-		bres = buffertools.concat(msg, path + "\x00")
-		socket.end(bres)
+		bytesWritten = msg.write(path,24)
+		msg.write("\x00", 24+bytesWritten)
+		socket.end(msg)
 
 
 sendCommand = (options, callback) ->

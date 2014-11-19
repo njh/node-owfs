@@ -17,7 +17,6 @@
     "test": "grunt"
   },
   "dependencies": {
-    "buffertools": "~2.1.2",
     "debug": "^2.0.0",
     "network-byte-order": "~0.2.0"
   },
