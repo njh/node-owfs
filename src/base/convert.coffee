@@ -10,7 +10,7 @@ exports.extractValue = (callback) ->
 			else
 				messageToUse = messages
 			debug "message to use",messageToUse
-			if messages.length > 1
+			if messageToUse.length > 0
 				result = messageToUse[0].payload.replace(new RegExp(" ", "g"), "")
 				callback(error, result)
 			else
