@@ -17,8 +17,14 @@
           messageToUse = messages;
         }
         debug("message to use", messageToUse);
-        result = messageToUse[0].payload.replace(new RegExp(" ", "g"), "");
-        return callback(error, result);
+        if (messageToUse.length > 0) {
+          result = messageToUse[0].payload.replace(new RegExp(" ", "g"), "");
+          return callback(error, result);
+        } else {
+          return callback({
+            msg: "No usable messages received, but no error returned."
+          });
+        }
       } else {
         return callback(error);
       }
