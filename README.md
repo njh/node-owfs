@@ -70,3 +70,9 @@ We are using [debug](https://github.com/visionmedia/debug) for debugging output.
 
 	DEBUG=owfs* node app.js
 	
+Development
+===========
+The build and test are run by grunt. Pull requests are very welcome. Please ensure that all tests pass successful by running grunt
+
+	grunt
+	
