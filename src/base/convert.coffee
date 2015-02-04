@@ -10,8 +10,12 @@ exports.extractValue = (callback) ->
 			else
 				messageToUse = messages
 			debug "message to use",messageToUse
-			result = messageToUse[0].payload.replace(new RegExp(" ", "g"), "")
-			callback(error, result)
+			if messages.length > 1
+				result = messageToUse[0].payload.replace(new RegExp(" ", "g"), "")
+				callback(error, result)
+			else
+				callback
+					msg: "No usable messages received, but no error returned."
 		else
 			callback(error)
 
