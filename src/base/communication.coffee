@@ -42,7 +42,7 @@ sendCommandToSocket = (options, socket, callback) ->
 
 	socket.connect options.port, options.server, ->
 		debug "Sending",options
-		data_len = 8192
+		data_len = options.data_len || 8192
 		msg = new Buffer(24+path.length+1)
 		htonl(msg, 0, 0) #version
 		htonl(msg, 4, path.length + 1) #payload length
