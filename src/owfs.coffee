@@ -9,6 +9,7 @@ class Client
 		command =
 			path: path
 			command: fun
+			data_len: 8192
 			server: @server
 			port: @port
 		@communication.sendCommand(command, convert.extractDirectories(callback))
@@ -17,6 +18,7 @@ class Client
 		command =
 			path: path
 			command: 2
+			data_len: 8192
 			server: @server
 			port: @port
 		@communication.sendCommand(command, convert.extractValue(callback))
@@ -25,6 +27,7 @@ class Client
 		command =
 			path: path + "\u0000" + payload
 			command: 3
+			data_len: payload.toString().length
 			server: @server
 			port: @port
 		@communication.sendCommand(command, callback)
