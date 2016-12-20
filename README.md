@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/benediktarnold/owfs.png?branch=master)](https://travis-ci.org/benediktarnold/owfs) [![david-dm][2]][1]
-  [1]: https://david-dm.org/benediktarnold/owfs
-  [2]: https://david-dm.org/benediktarnold/owfs.png
+[![Build Status](https://travis-ci.org/njh/node-owfs.png)](https://travis-ci.org/njh/node-owfs)
+[![Dependencies](https://david-dm.org/njh/node-owfs.png)](https://david-dm.org/njh/node-owfs)
+
 owfs
 ====
 
@@ -8,6 +8,7 @@ A [node.js](nodejs.org) client library to owserver [Documentation & protocol spe
 
 Installation
 ============
+
 	npm install owfs
 
 Examples
