@@ -12,7 +12,7 @@
     "url": "https://github.com/njh/node-owfs.git"
   },
   "author": "Benedikt Arnold <benedikt.arnold@gmx.net>",
-  "license": "BSD",
+  "license": "MIT",
   "scripts": {
     "test": "grunt"
   },
