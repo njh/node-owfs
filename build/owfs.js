@@ -17,6 +17,7 @@
       command = {
         path: path,
         command: fun,
+        data_len: 8192,
         server: this.server,
         port: this.port
       };
@@ -28,6 +29,7 @@
       command = {
         path: path,
         command: 2,
+        data_len: 8192,
         server: this.server,
         port: this.port
       };
@@ -39,6 +41,7 @@
       command = {
         path: path + "\u0000" + payload,
         command: 3,
+        data_len: payload.toString().length,
         server: this.server,
         port: this.port
       };

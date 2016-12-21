@@ -54,15 +54,14 @@
       return messages.push(message);
     });
     return socket.connect(options.port, options.server, function() {
-      var bytesWritten, data_len, msg;
+      var bytesWritten, msg;
       debug("Sending", options);
-      data_len = 8192;
       msg = new Buffer(24 + path.length + 1);
       htonl(msg, 0, 0);
       htonl(msg, 4, path.length + 1);
       htonl(msg, 8, options.command);
       htonl(msg, 12, 0x00000020);
-      htonl(msg, 16, data_len);
+      htonl(msg, 16, options.data_len);
       htonl(msg, 20, 0);
       bytesWritten = msg.write(path, 24);
       msg.write("\x00", 24 + bytesWritten);
