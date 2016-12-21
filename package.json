@@ -1,6 +1,6 @@
 {
   "name": "owfs",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "A client library for the one wire server protocol",
   "main": "build/owfs.js",
   "keywords": [
