@@ -6,7 +6,8 @@ var communicationStub = {
 
 	}
 };
-var Client = require('../build/owfs').Client;
+
+var Client = require('../lib/owfs').Client;
 var sendCommandStub;
 
 var sandbox;
@@ -42,6 +43,7 @@ describe('Constructor', function() {
 			done();
 		});
 	});
+
 	it('should use default port 4304', function(done) {
 		communicationRead('23');
 		var client = new Client("blablub",null,communicationStub);
@@ -69,6 +71,7 @@ describe('#read()', function() {
 			done();
 		});
 	});
+
 	it('should read an decimal', function(done) {
 		communicationRead('3.3434');
 		owfs.read('/some/path', function(error, value) {
