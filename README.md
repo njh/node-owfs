@@ -71,9 +71,25 @@ We are using [debug](https://github.com/visionmedia/debug) for debugging output.
 
 	DEBUG=owfs* node app.js
 	
-Development
-===========
-The build and test are run by grunt. Pull requests are very welcome. Please ensure that all tests pass successful by running grunt
+Debug
+=====
+We are using [debug](https://github.com/visionmedia/debug) for debugging output. If you are using owfs in your app, start the debug mode like this:
 
-	grunt
+	DEBUG=owfs* node app.js
 	
+
+Contributing
+============
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/njh/node-owfs.
+
+Please run ```npm test``` before submitting a Pull Request and add tests for any new functionality.
+
+This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
+
+License
+=======
+
+The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
