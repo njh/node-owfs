@@ -11,5 +11,8 @@ pids
 logs
 results
 
+# nyc test coverage
+.nyc_output
+
 node_modules
 npm-debug.log

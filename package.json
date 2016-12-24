@@ -14,16 +14,15 @@
   "author": "Benedikt Arnold <benedikt.arnold@gmx.net>",
   "license": "MIT",
   "scripts": {
-    "test": "grunt"
+    "test": "nyc mocha test/*.js"
   },
   "dependencies": {
     "debug": "^2.0.0",
     "network-byte-order": "~0.2.0"
   },
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-cafe-mocha": "~0.1.4",
-    "grunt-contrib-jshint": "~0.5.4",
-    "sinon": "~1.7.2"
+    "mocha": "^3.1.2",
+    "nyc": "^9.0.1",
+    "sinon": "^1.17.6"
   }
 }
