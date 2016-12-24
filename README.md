@@ -71,13 +71,6 @@ We are using [debug](https://github.com/visionmedia/debug) for debugging output.
 
 	DEBUG=owfs* node app.js
 	
-Debug
-=====
-We are using [debug](https://github.com/visionmedia/debug) for debugging output. If you are using owfs in your app, start the debug mode like this:
-
-	DEBUG=owfs* node app.js
-	
-
 Contributing
 ============
 
