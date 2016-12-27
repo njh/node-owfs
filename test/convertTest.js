@@ -10,7 +10,7 @@ var wrong = {
     size: 0,
     offset: 0
   },
-  payload: ''
+  payload: ""
 };
 
 var withoutPayload = {
@@ -33,7 +33,7 @@ var correct = {
     size: 12,
     offset: 0
   },
-  payload: '      22.375'
+  payload: "      22.375"
 };
 
 var check = function(done) {
