@@ -15,7 +15,7 @@
   "license": "MIT",
   "scripts": {
     "test": "nyc mocha test/*.js",
-    "posttest": "eslint *.js ./lib ./test"
+    "posttest": "eslint ./lib ./test"
   },
   "nyc": {
     "check-coverage": false,
