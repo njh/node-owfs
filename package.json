@@ -17,6 +17,12 @@
     "test": "nyc mocha test/*.js",
     "posttest": "eslint *.js ./lib ./test"
   },
+  "nyc": {
+    "check-coverage": false,
+    "reporter": [
+      "text",
+      "html"
+    ]
   },
   "dependencies": {
     "debug": "^2.0.0",
