@@ -14,13 +14,16 @@
   "author": "Benedikt Arnold <benedikt.arnold@gmx.net>",
   "license": "MIT",
   "scripts": {
-    "test": "nyc mocha test/*.js"
+    "test": "nyc mocha test/*.js",
+    "posttest": "eslint *.js ./lib ./test"
+  },
   },
   "dependencies": {
     "debug": "^2.0.0",
     "network-byte-order": "~0.2.0"
   },
   "devDependencies": {
+    "eslint": "^3.12.2",
     "mocha": "^3.1.2",
     "nyc": "^9.0.1",
     "sinon": "^1.17.6"
