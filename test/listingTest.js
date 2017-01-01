@@ -1,3 +1,5 @@
+"use strict";
+
 var assert = require("assert"),
     sinon = require("sinon"),
     Client = require("../lib/owfs").Client;

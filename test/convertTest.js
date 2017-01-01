@@ -1,3 +1,5 @@
+"use strict";
+
 var convert = require("../lib/base/convert"),
     assert = require("assert");
 

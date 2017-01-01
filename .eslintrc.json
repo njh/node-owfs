@@ -8,6 +8,7 @@
         "no-control-regex": "off",
         "curly": "error",
         "indent": "error",
+        "strict": "error",
         "linebreak-style": [
             "error",
             "unix"
