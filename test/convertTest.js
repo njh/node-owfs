@@ -47,20 +47,17 @@ var check = function(done) {
 
 describe("extractValue", function() {
     it("should extract the value from one correct and one wrong message", function(done) {
-        var messages;
-        messages = [correct, wrong];
+        var messages = [correct, wrong];
         return convert.extractValue(check(done))(null, messages);
     });
 
     it("should extract the value from one wrong and one correct message", function(done) {
-        var messages;
-        messages = [wrong, correct];
+        var messages = [wrong, correct];
         return convert.extractValue(check(done))(null, messages);
     });
 
     return it("should extract the value from a message with undefined payload and one correct message", function(done) {
-        var messages;
-        messages = [withoutPayload, correct];
+        var messages = [withoutPayload, correct];
         return convert.extractValue(check(done))(null, messages);
     });
 });
