@@ -14,8 +14,7 @@
   "author": "Benedikt Arnold <benedikt.arnold@gmx.net>",
   "license": "MIT",
   "scripts": {
-    "test": "nyc mocha test/*.js",
-    "posttest": "eslint ./lib ./test"
+    "test": "eslint lib test examples && nyc mocha test/*.js"
   },
   "nyc": {
     "check-coverage": false,
