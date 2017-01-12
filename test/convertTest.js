@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-var convert = require("../lib/base/convert");
-var assert = require("assert");
+var convert = require('../lib/base/convert');
+var assert = require('assert');
 
 var wrong = {
     header: {
@@ -12,7 +12,7 @@ var wrong = {
         size: 0,
         offset: 0
     },
-    payload: ""
+    payload: ''
 };
 
 var withoutPayload = {
@@ -35,7 +35,7 @@ var correct = {
         size: 12,
         offset: 0
     },
-    payload: "      22.375"
+    payload: '      22.375'
 };
 
 var check = function (done) {
@@ -45,18 +45,18 @@ var check = function (done) {
     };
 };
 
-describe("extractValue", function () {
-    it("should extract the value from one correct and one wrong message", function (done) {
+describe('extractValue', function () {
+    it('should extract the value from one correct and one wrong message', function (done) {
         var messages = [correct, wrong];
         return convert.extractValue(check(done))(null, messages);
     });
 
-    it("should extract the value from one wrong and one correct message", function (done) {
+    it('should extract the value from one wrong and one correct message', function (done) {
         var messages = [wrong, correct];
         return convert.extractValue(check(done))(null, messages);
     });
 
-    return it("should extract the value from a message with undefined payload and one correct message", function (done) {
+    return it('should extract the value from a message with undefined payload and one correct message', function (done) {
         var messages = [withoutPayload, correct];
         return convert.extractValue(check(done))(null, messages);
     });
