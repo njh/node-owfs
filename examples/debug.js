@@ -1,5 +1,4 @@
 var Client = require("../lib/owfs").Client;
-var net = require("net");
 var argv = require('optimist').argv,
     logger = require("winston");
 
