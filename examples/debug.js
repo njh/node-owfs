@@ -9,8 +9,8 @@ logger.cli();
 logger.remove(logger.transports.Console);
 logger.add(logger.transports.Console, { level: 'debug', colorize:true });
 
-var HOST = argv.host?argv.host:'localhost';
-var PORT = argv.port?argv.port:4304;
+var HOST = argv.host || "localhost";
+var PORT = argv.port || 4304;
 logger.info("Connecting to "+HOST+":"+PORT);
 var owfs = new Client(HOST, PORT);
 
