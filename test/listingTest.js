@@ -20,10 +20,10 @@ var testcases = [{
     message: "with emptyPayload "
 }];
 
-function stubWithPayload(payload) {
-    return function() {
+function stubWithPayload (payload) {
+    return function () {
         var communicationStub = {
-            sendCommand: function() {
+            sendCommand: function () {
 
             }
         };
@@ -49,12 +49,12 @@ var listingCommands = {
     "getslash": 10
 };
 
-Object.keys(listingCommands).forEach(function(command) {
-    describe("#" + command + "()", function() {
+Object.keys(listingCommands).forEach(function (command) {
+    describe("#" + command + "()", function () {
         var res = stubWithPayload(payloadResult)();
         var fun = listingCommands[command];
-        it("should send (" + fun + ") command", function(done) {
-            res.owfs[command]("/some/path", function() {
+        it("should send (" + fun + ") command", function (done) {
+            res.owfs[command]("/some/path", function () {
                 done();
             });
             assert.ok(res.stub.called);
@@ -68,11 +68,11 @@ Object.keys(listingCommands).forEach(function(command) {
         });
     });
 
-    describe("#" + command + "()", function() {
-        testcases.forEach(function(testcase) {
-            it(testcase.message + "should pass " + testcase.listingEntries + " directories to callback", function() {
+    describe("#" + command + "()", function () {
+        testcases.forEach(function (testcase) {
+            it(testcase.message + "should pass " + testcase.listingEntries + " directories to callback", function () {
                 var res = stubWithPayload(testcase.payload)();
-                res.owfs[command]("/some/path", function(error, directories) {
+                res.owfs[command]("/some/path", function (error, directories) {
                     assert.ok(!error);
                     assert.ok(directories, "directories");
                     assert.equal(directories.length, testcase.listingEntries);
