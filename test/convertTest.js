@@ -1,7 +1,7 @@
 "use strict";
 
-var convert = require("../lib/base/convert"),
-    assert = require("assert");
+var convert = require("../lib/base/convert");
+var assert = require("assert");
 
 var wrong = {
     header: {

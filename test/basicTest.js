@@ -1,7 +1,7 @@
 "use strict";
 
-var assert = require("assert"),
-    sinon = require("sinon");
+var assert = require("assert");
+var sinon = require("sinon");
 
 var communicationStub = {
     sendCommand: function() {

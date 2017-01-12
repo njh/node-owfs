@@ -1,6 +1,6 @@
 var Client = require("../lib/owfs").Client;
-var argv = require('optimist').argv,
-    logger = require("winston");
+var argv = require("optimist").argv;
+var logger = require("winston");
 
 logger.cli();
 
