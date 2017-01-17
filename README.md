@@ -4,7 +4,7 @@
 owfs
 ====
 
-A [node.js](nodejs.org) client library to owserver [Documentation & protocol specs](http://www.owfs.org)
+A [node.js] client library for 1-wire devices using the [owserver] protocol.
 
 Installation
 ============
@@ -67,10 +67,19 @@ Lists all the children of the supplied path as an array passed to the callback.
 
 Debug
 =====
-We are using [debug](https://github.com/visionmedia/debug) for debugging output. If you are using owfs in your app, start the debug mode like this:
+We are using [debug] for debugging output. If you are using owfs in your app, start the debug mode like this:
 
     DEBUG=owfs* node app.js
-    
+
+owserver Documentation
+======================
+
+* [owserver Command Manual](http://owfs.org/index.php?page=owserver)
+* [OWFS Network Protocol](http://owfs.org/index.php?page=owserver-protocol)
+* [OWFS Message Types](http://owfs.org/index.php?page=owserver-message-types)
+* [Configuring owserver](http://owfs.org/index.php?page=configuration-file)
+
+
 Contributing
 ============
 
@@ -78,11 +87,17 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/njh/no
 
 Please run ```npm test``` before submitting a Pull Request and add tests for any new functionality.
 
-This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant] code of conduct.
 
 
 License
 =======
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+The gem is available as open source under the terms of the [MIT License].
 
+
+[node.js]:     https://nodejs.org/
+[owserver]:    http://owfs.org/index.php?page=owserver
+[debug]:       https://github.com/visionmedia/debug
+[MIT License]: http://opensource.org/licenses/MIT
+[Contributor Covenant]: http://contributor-covenant.org

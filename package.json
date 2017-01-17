@@ -1,11 +1,14 @@
 {
   "name": "owfs",
   "version": "0.3.0",
-  "description": "A client library for the one wire server protocol",
+  "description": "A client library for 1-wire devices using the owserver protocol",
   "main": "lib/owfs.js",
   "keywords": [
+    "1-wire",
     "owfs",
-    "ds1820"
+    "owserver",
+    "ds18b20",
+    "ds18s20"
   ],
   "repository": {
     "type": "git",
