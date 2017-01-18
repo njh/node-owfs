@@ -1,38 +1,55 @@
+/*
+  Example of using node-owfs to connect to owserver.
+  
+  Uncomment the various sections below to try out the different owfs functions.
+  By default it will connect to port 4304 on localhost
+  or you can specify something else:
+  
+      node debug.js --host pi.example.com --port 1234
+  
+*/
+
 'use strict';
+
+/* eslint no-console: "off" */
+
 
 var Client = require('../lib/owfs').Client;
 var argv = require('optimist').argv;
-var logger = require('winston');
-
-logger.cli();
-
-logger.remove(logger.transports.Console);
-logger.add(logger.transports.Console, { level: 'debug', colorize:true });
-
 var HOST = argv.host || 'localhost';
 var PORT = argv.port || 4304;
-logger.info('Connecting to '+HOST+':'+PORT);
+
+console.log('Connecting to ' + HOST + ':' + PORT);
 var owfs = new Client(HOST, PORT);
 
-owfs.dir('/', function(err, result){
-    logger.info('dir',result);
+owfs.dirall('/', function(err, result) {
+    if (err) {
+        console.log('err: ' + err);
+    } else {
+        console.log('dirall: ' + result);
+    }
 });
 
-/* owfs.get("/", function(err, result){
-    logger.info("get",result);
-});
-
-owfs.getslash("/", function(err, result){
-    logger.info("getslash",result);
+/* owfs.get('/', function(err, result) {
+    if (err) {
+        console.log('err: ' + err);
+    } else {
+        console.log('get: ' + result);
+    }
 }); */
 
-/* owfs.read("/10.6CC351E220AE/temperature", function(err, result){
-    logger.info("Result 1: "+result);
+/* owfs.getslash('/', function(err, result) {
+    if (err) {
+        console.log('err: ' + err);
+    } else {
+        console.log('read: ' + result);
+    }
 }); */
 
-/* owfs.read("/10.A7F1D92A82C/temperature", function(err, result){
-    logger.error("Error: ",err);
-    logger.info("No result",result);
+/* owfs.read('/28.A7F1D92A82C8/temperature', function(err, result) {
+    if (err) {
+        console.log('err: ' + err);
+    } else {
+        console.log('read: ' + result);
+    }
 }); */
-
-
