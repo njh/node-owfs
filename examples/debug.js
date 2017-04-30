@@ -11,9 +11,6 @@
 
 'use strict';
 
-/* eslint no-console: "off" */
-
-
 var Client = require('../lib/owfs').Client;
 var argv = require('optimist').argv;
 var HOST = argv.host || 'localhost';

@@ -6,6 +6,7 @@
     "extends": "eslint:recommended",
     "rules": {
         "no-control-regex": "off",
+        "no-console": "off",
         "curly": "error",
         "indent": "error",
         "strict": "error",
