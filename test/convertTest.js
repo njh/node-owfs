@@ -45,6 +45,24 @@ var check = function (done) {
     };
 };
 
+describe('preparePayload', function () {
+    it('short convert true to the string "1"', function () {
+        assert.equal(convert.preparePayload(true), '1');
+    });
+
+    it('short convert false to the string "0"', function () {
+        assert.equal(convert.preparePayload(false), '0');
+    });
+
+    it('short convert 1 to the string "1"', function () {
+        assert.equal(convert.preparePayload(1), '1');
+    });
+
+    it('short convert 0 to the string "0"', function () {
+        assert.equal(convert.preparePayload(0), '0');
+    });
+});
+
 describe('extractValue', function () {
     it('should extract the value from one correct and one wrong message', function (done) {
         var messages = [correct, wrong];
