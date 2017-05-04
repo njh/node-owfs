@@ -18,13 +18,15 @@ function startTestServer(port, devices, callback) {
         '--tester='+devices
     ]);
 
+    var logLines = '';
     var timeout = setTimeout(function () {
         server.kill('SIGTERM');
-        throw new Error('Timeout while starting owserver');
+        throw new Error('Timeout while starting owserver: '+logLines);
     }, 1000);
 
     server.stderr.on('data', function(data) {
         var str = data.toString();
+        logLines += str;
         if (str.match(/Setting up tester Bus Master/)) {
             clearTimeout(timeout);
             if (callback) {
@@ -34,6 +36,7 @@ function startTestServer(port, devices, callback) {
     });
   
     server.on('error', function (err) {
+        console.log(logLines);
         throw new Error('owserver error: '+err);
     });
     
