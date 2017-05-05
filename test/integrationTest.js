@@ -64,4 +64,24 @@ describe('Integration Test', function () {
         });
     });
 
+    it('should return an error for a non-existant device', function (done) {
+        var client = new Client('127.0.0.1', port); 
+        client.read('/28.000028D80000/temperature', function(err, result) {
+            assert(err.msg.match(/Communication Error/));
+            assert.equal(err.header.ret, -1);
+            assert.equal(result, undefined);
+            done();
+        });
+    });
+
+    it('should return an error for badly named device', function (done) {
+        var client = new Client('127.0.0.1', port); 
+        client.read('foo/bar', function(err, result) {
+            assert(err.msg.match(/Communication Error/));
+            assert.equal(err.header.ret, -1);
+            assert.equal(result, undefined);
+            done();
+        });
+    });
+
 });
