@@ -20,7 +20,11 @@
     "test": "./scripts/run-eslint.sh && nyc mocha test/*.js"
   },
   "nyc": {
-    "check-coverage": false,
+    "check-coverage": true,
+    "lines": 90,
+    "statements": 90,
+    "functions": 90,
+    "branches": 90,
     "reporter": [
       "text",
       "html"
