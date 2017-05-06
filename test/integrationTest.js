@@ -59,13 +59,13 @@ describe('Integration Test', function () {
     before(function (done) {
         server = startTestServer(port, 'DS18B20', done);
     });
-    
+
     after(function () {
         server.kill('SIGTERM');
     });
 
     it('should read a temperature from a DS18B20 device', function (done) {
-        var client = new Client('127.0.0.1', port); 
+        var client = new Client('127.0.0.1', port);
         client.read('/28.000028D70000/temperature', function(err, result) {
             assert.equal(err, undefined);
             assert.equal(result, '4');
@@ -74,7 +74,7 @@ describe('Integration Test', function () {
     });
 
     it('should return an error for a non-existant device', function (done) {
-        var client = new Client('127.0.0.1', port); 
+        var client = new Client('127.0.0.1', port);
         client.read('/28.000028D80000/temperature', function(err, result) {
             assert(err.msg.match(/Communication Error/));
             assert.equal(err.header.ret, -1);
@@ -84,7 +84,7 @@ describe('Integration Test', function () {
     });
 
     it('should return an error for badly named device', function (done) {
-        var client = new Client('127.0.0.1', port); 
+        var client = new Client('127.0.0.1', port);
         client.read('foo/bar', function(err, result) {
             assert(err.msg.match(/Communication Error/));
             assert.equal(err.header.ret, -1);
