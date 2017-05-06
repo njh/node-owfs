@@ -1,6 +1,7 @@
 'use strict';
 
 var assert = require('assert');
+var net = require('net');
 var Client = require('../lib/owfs').Client;
 var spawn = require('child_process').spawn;
 
@@ -11,35 +12,43 @@ function startTestServer(port, devices, callback) {
 
     var server = spawn('owserver', [
         '--foreground',
+        '--nozero',
         '--Celsius',
         '--port=127.0.0.1:'+port,
         '--error_print=2',
-        '--error_level=2',
         '--tester='+devices
-    ]);
-
-    var logLines = '';
-    var timeout = setTimeout(function () {
-        server.kill('SIGTERM');
-        throw new Error('Timeout while starting owserver: '+logLines);
-    }, 1000);
-
-    server.stderr.on('data', function(data) {
-        var str = data.toString();
-        logLines += str;
-        if (str.match(/Setting up tester Bus Master/)) {
-            clearTimeout(timeout);
-            if (callback) {
-                callback();
-            }
-        }
+    ], {
+        'stdio': 'inherit'
     });
-  
+
+    // Wait for the server to start accepting connections
+    var count = 0;
+    var timer = setInterval(function () {
+        count += 1;
+        var socket = new net.Socket();
+        socket.connect({
+            'host': '127.0.0.1',
+            'port': port,
+            'timeout': 5
+        }, function () {
+            // Successfully connected
+            socket.end();
+            clearInterval(timer);
+            callback();
+        });
+
+        socket.on('error', function (err) {
+            console.log('Waiting longer for test server to start: '+err);
+            if (count > 5) {
+                throw new Error('Failed to connect to owserver after '+count+' attempts');
+            }
+        });
+    }, 10);
+
     server.on('error', function (err) {
-        console.log(logLines);
         throw new Error('owserver error: '+err);
     });
-    
+
     return server;
 }
 
