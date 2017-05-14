@@ -1,5 +1,6 @@
 'use strict';
 
+var assert = require('assert');
 var sinon = require('sinon');
 var net = require('net');
 var sendCommandToSocket = require('../lib/base/communication').sendCommandToSocket;
@@ -78,6 +79,46 @@ describe('Communication Test', function () {
             sendCommandToSocket(options, socket, function() {});
             
             mock.verify();
+        });
+
+        it('should handle parsing of a single message', function (done) {
+            var options = {
+                path: '/some/path',
+                command: 2,
+                data_len: 8192,
+                server: '127.0.0.1',
+                port: 4304
+            };
+
+            var socket = new net.Socket();
+            var response = new Buffer([
+                0x00, 0x00, 0x00, 0x00,   // Protocol Version
+                0x00, 0x00, 0x00, 0x0c,   // Length (in bytes) of payload data
+                0x00, 0x00, 0x00, 0x0c,   // Type of function call
+                0x00, 0x00, 0x00, 0x20,   // Format flags
+                0x00, 0x00, 0x00, 0x0c,   // Size of data 
+                0x00, 0x00, 0x00, 0x00,   // Offset for read or write
+                0x20, 0x20, 0x20, 0x20, 0x20, 0x31, 0x37, 0x2e, 0x38, 0x31, 0x32, 0x35
+            ]);
+            sinon.stub(socket, 'connect', function() {
+                socket.emit('data', response);
+                socket.emit('end');
+            });
+
+            sendCommandToSocket(options, socket, function(err, messages) {
+                assert.equal(err, undefined);
+                assert.equal(messages.length, 1);
+                
+                var message = messages[0];
+                assert.equal(0x00000000, message.header.version);
+                assert.equal(0x0000000c, message.header.payload);
+                assert.equal(0x0000000c, message.header.ret);
+                assert.equal(0x00000020, message.header.controlflags);
+                assert.equal(0x0000000c, message.header.size);
+                assert.equal(0x00000000, message.header.offset);
+                assert.equal('     17.8125', message.payload);
+                done();
+            });
         });
 
     });
