@@ -26,6 +26,13 @@ var sendCommandToSocket = require('../lib/base/communication').sendCommandToSock
 
 
 describe('Communication Test', function () {
+    beforeEach(function() {
+        var version = Number(process.version.match(/^v(\d+\.\d+)/)[1]);
+        if (version < 4.0) {
+            // These tests erroneously fails on old versions of node.js
+            this.skip();
+        }
+    });
 
     describe('sending a command', function () {
 
