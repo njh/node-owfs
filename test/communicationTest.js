@@ -81,7 +81,7 @@ describe('Communication Test', function () {
             mock.verify();
         });
 
-        it('should handle parsing of a single message', function (done) {
+        it('should handle parsing of a single response message', function (done) {
             var options = {
                 path: '/some/path',
                 command: 2,
@@ -109,14 +109,16 @@ describe('Communication Test', function () {
                 assert.equal(err, undefined);
                 assert.equal(messages.length, 1);
                 
-                var message = messages[0];
-                assert.equal(0x00000000, message.header.version);
-                assert.equal(0x0000000c, message.header.payload);
-                assert.equal(0x0000000c, message.header.ret);
-                assert.equal(0x00000020, message.header.controlflags);
-                assert.equal(0x0000000c, message.header.size);
-                assert.equal(0x00000000, message.header.offset);
-                assert.equal('     17.8125', message.payload);
+                assert.equal(messages[0].header.version, 0x00);
+                assert.equal(messages[0].header.payload, 0x0c);
+                assert.equal(messages[0].header.ret, 0x0c);
+                assert.equal(messages[0].header.controlflags, 0x20);
+                assert.equal(messages[0].header.size, 0x0c);
+                assert.equal(messages[0].header.offset, 0x00);
+                assert.equal(messages[0].payload, '     17.8125');
+                done();
+            });
+        });
                 done();
             });
         });
