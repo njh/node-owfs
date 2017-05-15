@@ -119,6 +119,61 @@ describe('Communication Test', function () {
                 done();
             });
         });
+
+
+        it('should handle multiple empty messages before a response message', function (done) {
+            var options = {
+                path: '/some/path',
+                command: 2,
+                data_len: 8192,
+                server: '127.0.0.1',
+                port: 4304
+            };
+
+            var socket = new net.Socket();
+            var empty = new Buffer([
+                0x00, 0x00, 0x00, 0x00,   // Protocol Version
+                0xff, 0xff, 0xff, 0xff,   // Length (in bytes) of payload data
+                0x00, 0x00, 0x00, 0x00,   // Type of function call
+                0x00, 0x00, 0x00, 0x00,   // Format flags
+                0x00, 0x00, 0x00, 0x00,   // Size of data 
+                0x00, 0x00, 0x00, 0x00    // Offset for read or write
+            ]);
+            var response = new Buffer([
+                0x00, 0x00, 0x00, 0x00,   // Protocol Version
+                0x00, 0x00, 0x00, 0x0c,   // Length (in bytes) of payload data
+                0x00, 0x00, 0x00, 0x0c,   // Type of function call
+                0x00, 0x00, 0x00, 0x20,   // Format flags
+                0x00, 0x00, 0x00, 0x0c,   // Size of data 
+                0x00, 0x00, 0x00, 0x00,   // Offset for read or write
+                0x20, 0x20, 0x20, 0x20, 0x20, 0x31, 0x37, 0x2e, 0x38, 0x31, 0x32, 0x35
+            ]);
+            sinon.stub(socket, 'connect', function() {
+                socket.emit('data', empty);
+                socket.emit('data', empty);
+                socket.emit('data', response);
+                socket.emit('end');
+            });
+
+            sendCommandToSocket(options, socket, function(err, messages) {
+                assert.equal(err, undefined);
+                assert.equal(messages.length, 3);
+
+                assert.equal(messages[0].header.version, 0);
+                assert.equal(messages[0].header.payload, -1);
+                assert.equal(messages[0].header.ret, 0);
+                assert.equal(messages[0].header.controlflags, 0);
+                assert.equal(messages[0].header.size, 0);
+                assert.equal(messages[0].header.offset, 0);
+                assert.equal(messages[0].payload, null);
+
+                assert.equal(messages[2].header.version, 0);
+                assert.equal(messages[2].header.payload, 0x0c);
+                assert.equal(messages[2].header.ret, 0x0c);
+                assert.equal(messages[2].header.controlflags, 0x20);
+                assert.equal(messages[2].header.size, 0x0c);
+                assert.equal(messages[2].header.offset, 0x00);
+                assert.equal(messages[2].payload, '     17.8125');
                 done();
             });
         });
