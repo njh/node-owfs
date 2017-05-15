@@ -178,6 +178,42 @@ describe('Communication Test', function () {
             });
         });
 
+        it('should handle parsing of an error message', function (done) {
+            var options = {
+                path: '/some/path',
+                command: 2,
+                data_len: 8192,
+                server: '127.0.0.1',
+                port: 4304
+            };
+
+            var socket = new net.Socket();
+            var response = new Buffer([
+                0x00, 0x00, 0x00, 0x00,   // Protocol Version
+                0x00, 0x00, 0x00, 0x00,   // Length (in bytes) of payload data
+                0xff, 0xff, 0xff, 0xff,   // Return Code
+                0x00, 0x00, 0x00, 0x00,   // Format flags
+                0x00, 0x00, 0x00, 0x00,   // Size of data
+                0x00, 0x00, 0x00, 0x00,   // Offset for read or write
+            ]);
+            sinon.stub(socket, 'connect', function() {
+                socket.emit('data', response);
+                socket.emit('end');
+            });
+
+            sendCommandToSocket(options, socket, function(err, messages) {
+                assert.equal(messages, undefined);
+
+                assert(err !== undefined);
+                assert.equal(err.msg, 'Communication Error. Received -1');
+                assert.equal(err.header.ret, -1);
+                assert.equal(err.header.controlflags, 0);
+                assert.equal(err.header.size, 0);
+                assert.equal(err.header.offset, 0);
+                done();
+            });
+        });
+
     });
 
 });
