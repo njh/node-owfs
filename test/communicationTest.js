@@ -47,7 +47,7 @@ describe('Communication Test', function () {
             mock.expects('connect').once().withExactArgs(4304, '127.0.0.1');
 
             sendCommandToSocket(options, socket, function() {});
-            
+
             mock.verify();
         });
 
@@ -70,14 +70,14 @@ describe('Communication Test', function () {
                 0x00, 0x00, 0x00, 0x0b,   // Length (in bytes) of payload data
                 0x00, 0x00, 0x00, 0x02,   // Type of function call
                 0x00, 0x00, 0x00, 0x20,   // Format flags
-                0x00, 0x00, 0x20, 0x00,   // Expected size of data 
+                0x00, 0x00, 0x20, 0x00,   // Expected size of data
                 0x00, 0x00, 0x00, 0x00,   // Offset for read or write
                 0x2f, 0x73, 0x6f, 0x6d, 0x65, 0x2f, 0x70, 0x61, 0x74, 0x68, 0x00
             ]);
             mock.expects('end').once().withExactArgs(expect);
 
             sendCommandToSocket(options, socket, function() {});
-            
+
             mock.verify();
         });
 
@@ -94,9 +94,9 @@ describe('Communication Test', function () {
             var response = new Buffer([
                 0x00, 0x00, 0x00, 0x00,   // Protocol Version
                 0x00, 0x00, 0x00, 0x0c,   // Length (in bytes) of payload data
-                0x00, 0x00, 0x00, 0x0c,   // Type of function call
+                0x00, 0x00, 0x00, 0x0c,   // Return Code
                 0x00, 0x00, 0x00, 0x20,   // Format flags
-                0x00, 0x00, 0x00, 0x0c,   // Size of data 
+                0x00, 0x00, 0x00, 0x0c,   // Size of data
                 0x00, 0x00, 0x00, 0x00,   // Offset for read or write
                 0x20, 0x20, 0x20, 0x20, 0x20, 0x31, 0x37, 0x2e, 0x38, 0x31, 0x32, 0x35
             ]);
@@ -108,7 +108,7 @@ describe('Communication Test', function () {
             sendCommandToSocket(options, socket, function(err, messages) {
                 assert.equal(err, undefined);
                 assert.equal(messages.length, 1);
-                
+
                 assert.equal(messages[0].header.version, 0x00);
                 assert.equal(messages[0].header.payload, 0x0c);
                 assert.equal(messages[0].header.ret, 0x0c);
@@ -119,7 +119,6 @@ describe('Communication Test', function () {
                 done();
             });
         });
-
 
         it('should handle multiple empty messages before a response message', function (done) {
             var options = {
@@ -134,17 +133,17 @@ describe('Communication Test', function () {
             var empty = new Buffer([
                 0x00, 0x00, 0x00, 0x00,   // Protocol Version
                 0xff, 0xff, 0xff, 0xff,   // Length (in bytes) of payload data
-                0x00, 0x00, 0x00, 0x00,   // Type of function call
+                0x00, 0x00, 0x00, 0x00,   // Return Code
                 0x00, 0x00, 0x00, 0x00,   // Format flags
-                0x00, 0x00, 0x00, 0x00,   // Size of data 
+                0x00, 0x00, 0x00, 0x00,   // Size of data
                 0x00, 0x00, 0x00, 0x00    // Offset for read or write
             ]);
             var response = new Buffer([
                 0x00, 0x00, 0x00, 0x00,   // Protocol Version
                 0x00, 0x00, 0x00, 0x0c,   // Length (in bytes) of payload data
-                0x00, 0x00, 0x00, 0x0c,   // Type of function call
+                0x00, 0x00, 0x00, 0x0c,   // Return Code
                 0x00, 0x00, 0x00, 0x20,   // Format flags
-                0x00, 0x00, 0x00, 0x0c,   // Size of data 
+                0x00, 0x00, 0x00, 0x0c,   // Size of data
                 0x00, 0x00, 0x00, 0x00,   // Offset for read or write
                 0x20, 0x20, 0x20, 0x20, 0x20, 0x31, 0x37, 0x2e, 0x38, 0x31, 0x32, 0x35
             ]);

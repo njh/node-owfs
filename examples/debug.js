@@ -1,12 +1,12 @@
 /*
   Example of using node-owfs to connect to owserver.
-  
+
   Uncomment the various sections below to try out the different owfs functions.
   By default it will connect to port 4304 on localhost
   or you can specify something else:
-  
+
       node debug.js --host pi.example.com --port 1234
-  
+
 */
 
 'use strict';
