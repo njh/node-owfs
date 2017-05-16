@@ -41,7 +41,7 @@ var correct = {
 var check = function (done) {
     return function (err, result) {
         assert.equal(result, 22.375);
-        return done();
+        done();
     };
 };
 
@@ -68,17 +68,17 @@ describe('Convert Tests', function () {
     describe('extractValue', function () {
         it('should extract the value from one correct and one wrong message', function (done) {
             var messages = [correct, wrong];
-            return convert.extractValue(check(done))(null, messages);
+            convert.extractValue(check(done))(null, messages);
         });
 
         it('should extract the value from one wrong and one correct message', function (done) {
             var messages = [wrong, correct];
-            return convert.extractValue(check(done))(null, messages);
+            convert.extractValue(check(done))(null, messages);
         });
 
-        return it('should extract the value from a message with undefined payload and one correct message', function (done) {
+        it('should extract the value from a message with undefined payload and one correct message', function (done) {
             var messages = [withoutPayload, correct];
-            return convert.extractValue(check(done))(null, messages);
+            convert.extractValue(check(done))(null, messages);
         });
     });
 
