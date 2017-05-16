@@ -49,36 +49,40 @@ var listingCommands = {
     'getslash': 10
 };
 
-Object.keys(listingCommands).forEach(function (command) {
-    describe('#' + command + '()', function () {
-        var res = stubWithPayload(payloadResult)();
-        var fun = listingCommands[command];
-        it('should send (' + fun + ') command', function (done) {
-            res.owfs[command]('/some/path', function () {
-                done();
-            });
-            assert.ok(res.stub.called);
-            sinon.assert.calledWith(res.stub, sinon.match({
-                command: fun,
-                server: 'blablub',
-                port: 4304,
-                path: '/some/path'
-            }));
-            res.stub.restore();
-        });
-    });
+describe('Listing Tests', function () {
 
-    describe('#' + command + '()', function () {
-        testcases.forEach(function (testcase) {
-            it(testcase.message + 'should pass ' + testcase.listingEntries + ' directories to callback', function () {
-                var res = stubWithPayload(testcase.payload)();
-                res.owfs[command]('/some/path', function (error, directories) {
-                    assert.ok(!error);
-                    assert.ok(directories, 'directories');
-                    assert.equal(directories.length, testcase.listingEntries);
-                    res.stub.restore();
+    Object.keys(listingCommands).forEach(function (command) {
+        describe('#' + command + '()', function () {
+            var res = stubWithPayload(payloadResult)();
+            var fun = listingCommands[command];
+            it('should send (' + fun + ') command', function (done) {
+                res.owfs[command]('/some/path', function () {
+                    done();
+                });
+                assert.ok(res.stub.called);
+                sinon.assert.calledWith(res.stub, sinon.match({
+                    command: fun,
+                    server: 'blablub',
+                    port: 4304,
+                    path: '/some/path'
+                }));
+                res.stub.restore();
+            });
+        });
+
+        describe('#' + command + '()', function () {
+            testcases.forEach(function (testcase) {
+                it(testcase.message + 'should pass ' + testcase.listingEntries + ' directories to callback', function () {
+                    var res = stubWithPayload(testcase.payload)();
+                    res.owfs[command]('/some/path', function (error, directories) {
+                        assert.ok(!error);
+                        assert.ok(directories, 'directories');
+                        assert.equal(directories.length, testcase.listingEntries);
+                        res.stub.restore();
+                    });
                 });
             });
         });
     });
+
 });
