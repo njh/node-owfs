@@ -213,6 +213,30 @@ describe('Communication Test', function () {
             });
         });
 
+        it('should pass socket errors to the callback handler', function (done) {
+            var options = {
+                path: '/some/path',
+                command: 2,
+                data_len: 8192,
+                server: '127.0.0.1',
+                port: 4304
+            };
+
+            var socket = new net.Socket();
+            sinon.stub(socket, 'connect', function() {
+                socket.emit('error', new Error('the was an error'));
+            });
+
+            sendCommandToSocket(options, socket, function(err, messages) {
+                assert.equal(messages, undefined);
+
+                assert.equal(typeof err, 'object');
+                assert.equal(err.name, 'Error');
+                assert.equal(err.message, 'the was an error');
+                done();
+            });
+        });
+
     });
 
 });
