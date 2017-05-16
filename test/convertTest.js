@@ -80,6 +80,25 @@ describe('Convert Tests', function () {
             var messages = [withoutPayload, correct];
             convert.extractValue(check(done))(null, messages);
         });
+
+        it('should pass an error to callback when there are no usable messages', function (done) {
+            var messages = [withoutPayload, withoutPayload];
+            convert.extractValue(function(err, result) {
+                assert.equal(err.msg, 'No usable messages received, but no error returned.');
+                assert.equal(result, undefined);
+                done();
+            })(null, messages);
+        });
+
+        it('should pass an error to callback when there was an error', function (done) {
+            var messages = [];
+            var error = new Error('there was an error');
+            convert.extractValue(function(err, result) {
+                assert.equal(err.message, 'there was an error');
+                assert.equal(result, undefined);
+                done();
+            })(error, messages);
+        });
     });
 
 });
