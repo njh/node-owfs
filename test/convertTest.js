@@ -38,13 +38,6 @@ var correct = {
     payload: '      22.375'
 };
 
-var check = function (done) {
-    return function (err, result) {
-        assert.equal(result, 22.375);
-        done();
-    };
-};
-
 describe('Convert Tests', function () {
 
     describe('preparePayload', function () {
@@ -68,17 +61,29 @@ describe('Convert Tests', function () {
     describe('extractValue', function () {
         it('should extract the value from one correct and one wrong message', function (done) {
             var messages = [correct, wrong];
-            convert.extractValue(check(done))(null, messages);
+            convert.extractValue(function(err, result) {
+                assert.equal(err, undefined);
+                assert.equal(result, 22.375);
+                done();
+            })(null, messages);
         });
 
         it('should extract the value from one wrong and one correct message', function (done) {
             var messages = [wrong, correct];
-            convert.extractValue(check(done))(null, messages);
+            convert.extractValue(function(err, result) {
+                assert.equal(err, undefined);
+                assert.equal(result, 22.375);
+                done();
+            })(null, messages);
         });
 
         it('should extract the value from a message with undefined payload and one correct message', function (done) {
             var messages = [withoutPayload, correct];
-            convert.extractValue(check(done))(null, messages);
+            convert.extractValue(function(err, result) {
+                assert.equal(err, undefined);
+                assert.equal(result, 22.375);
+                done();
+            })(null, messages);
         });
 
         it('should pass an error to callback when there are no usable messages', function (done) {
