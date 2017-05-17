@@ -1,6 +1,6 @@
 {
   "name": "owfs",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A client library for 1-wire devices using the owserver protocol",
   "main": "lib/owfs.js",
   "keywords": [
