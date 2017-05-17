@@ -120,6 +120,48 @@ describe('Communication Test', function () {
             });
         });
 
+        it('should handle parsing of a directory response message', function (done) {
+            var options = {
+                path: '/',
+                command: 7,
+                data_len: 8192,
+                server: '127.0.0.1',
+                port: 4304
+            };
+
+            var socket = new net.Socket();
+            var response = new Buffer([
+                0x00, 0x00, 0x00, 0x00,   // Protocol Version
+                0x00, 0x00, 0x00, 0x22,   // Length (in bytes) of payload data
+                0x00, 0x00, 0x00, 0x00,   // Return Code
+                0x00, 0x00, 0x00, 0x20,   // Format flags
+                0x00, 0x00, 0x00, 0x21,   // Size of data
+                0x00, 0x00, 0x80, 0x02,   // Offset for read or write
+                0x2f, 0x32, 0x38, 0x2e, 0x30, 0x30, 0x30, 0x30, 0x32, 0x38,
+                0x44, 0x37, 0x30, 0x30, 0x30, 0x30, 0x2c, 0x2f, 0x32, 0x38,
+                0x2e, 0x30, 0x30, 0x30, 0x30, 0x32, 0x38, 0x44, 0x37, 0x30,
+                0x31, 0x30, 0x30, 0x00, 
+            ]);
+            sinon.stub(socket, 'connect', function() {
+                socket.emit('data', response);
+                socket.emit('end');
+            });
+
+            sendCommandToSocket(options, socket, function(err, messages) {
+                assert.equal(err, undefined);
+                assert.equal(messages.length, 1);
+
+                assert.equal(messages[0].header.version, 0x00);
+                assert.equal(messages[0].header.payload, 0x22);
+                assert.equal(messages[0].header.ret, 0x00);
+                assert.equal(messages[0].header.controlflags, 0x20);
+                assert.equal(messages[0].header.size, 0x21);
+                assert.equal(messages[0].header.offset, 0x8002);
+                assert.equal(messages[0].payload, '/28.000028D70000,/28.000028D70100\0');
+                done();
+            });
+        });
+
         it('should handle multiple empty messages before a response message', function (done) {
             var options = {
                 path: '/some/path',
