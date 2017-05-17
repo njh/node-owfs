@@ -64,6 +64,15 @@ describe('Integration Test', function () {
         server.kill('SIGTERM');
     });
 
+    it('should read a list of directories', function (done) {
+        var client = new Client('127.0.0.1', port);
+        client.dirall('/', function(err, result) {
+            assert.equal(err, undefined);
+            assert.deepEqual(result, ['/28.000028D70000']);
+            done();
+        });
+    });
+
     it('should read a temperature from a DS18B20 device', function (done) {
         var client = new Client('127.0.0.1', port);
         client.read('/28.000028D70000/temperature', function(err, result) {
