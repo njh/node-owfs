@@ -106,4 +106,36 @@ describe('Convert Tests', function () {
         });
     });
 
+    describe('extractDirectories', function () {
+        it('should extract a list of directories', function (done) {
+            var messages = [{
+                header: {
+                    version: 0,
+                    payload: 12,
+                    ret: 12,
+                    controlflags: 32,
+                    size: 12,
+                    offset: 0
+                },
+                payload: '/28.000028D70000,/3A.00003AC50100'
+            }];
+            convert.extractDirectories(function(err, result) {
+                assert.equal(err, undefined);
+                assert.deepEqual(result, [ '/28.000028D70000', '/3A.00003AC50100' ]);
+                done();
+            })(null, messages);
+        });
+
+        it('should pass an error to callback when there was an error', function (done) {
+            var messages = [];
+            var error = new Error('there was an error');
+            convert.extractDirectories(function(err, result) {
+                assert.equal(err.message, 'there was an error');
+                assert.equal(result, undefined);
+                done();
+            })(error, messages);
+        });
+    
+    });
+
 });
