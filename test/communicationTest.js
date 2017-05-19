@@ -55,7 +55,6 @@ describe('Communication Test', function () {
             var options = {
                 path: '/some/path',
                 command: 2,
-                data_len: 8192,
                 server: '127.0.0.1',
                 port: 4304
             };
@@ -81,11 +80,41 @@ describe('Communication Test', function () {
             mock.verify();
         });
 
+        it('should send a payload with the command, if given', function () {
+            var options = {
+                path: '/some/path',
+                payload: '255',
+                command: 3,
+                server: '127.0.0.1',
+                port: 4304
+            };
+            var socket = new net.Socket();
+            var mock = sinon.mock(socket);
+            sinon.stub(socket, 'connect', function() {
+                socket.emit('connect');
+            });
+
+            var expect = new Buffer([
+                0x00, 0x00, 0x00, 0x00,   // Protocol Version
+                0x00, 0x00, 0x00, 0x0e,   // Length (in bytes) of payload data
+                0x00, 0x00, 0x00, 0x03,   // Type of function call
+                0x00, 0x00, 0x00, 0x20,   // Format flags
+                0x00, 0x00, 0x00, 0x03,   // Expected size of data
+                0x00, 0x00, 0x00, 0x00,   // Offset for read or write
+                0x2f, 0x73, 0x6f, 0x6d, 0x65, 0x2f, 0x70, 0x61, 0x74, 0x68, 0x00,
+                0x32, 0x35, 0x35
+            ]);
+            mock.expects('end').once().withExactArgs(expect);
+
+            sendCommandToSocket(options, socket, function() {});
+
+            mock.verify();
+        });
+
         it('should handle parsing of a single response message', function (done) {
             var options = {
                 path: '/some/path',
                 command: 2,
-                data_len: 8192,
                 server: '127.0.0.1',
                 port: 4304
             };
@@ -124,7 +153,6 @@ describe('Communication Test', function () {
             var options = {
                 path: '/',
                 command: 7,
-                data_len: 8192,
                 server: '127.0.0.1',
                 port: 4304
             };
@@ -140,7 +168,7 @@ describe('Communication Test', function () {
                 0x2f, 0x32, 0x38, 0x2e, 0x30, 0x30, 0x30, 0x30, 0x32, 0x38,
                 0x44, 0x37, 0x30, 0x30, 0x30, 0x30, 0x2c, 0x2f, 0x32, 0x38,
                 0x2e, 0x30, 0x30, 0x30, 0x30, 0x32, 0x38, 0x44, 0x37, 0x30,
-                0x31, 0x30, 0x30, 0x00, 
+                0x31, 0x30, 0x30, 0x00,
             ]);
             sinon.stub(socket, 'connect', function() {
                 socket.emit('data', response);
@@ -166,7 +194,6 @@ describe('Communication Test', function () {
             var options = {
                 path: '/some/path',
                 command: 2,
-                data_len: 8192,
                 server: '127.0.0.1',
                 port: 4304
             };
@@ -223,7 +250,6 @@ describe('Communication Test', function () {
             var options = {
                 path: '/some/path',
                 command: 2,
-                data_len: 8192,
                 server: '127.0.0.1',
                 port: 4304
             };
@@ -259,7 +285,6 @@ describe('Communication Test', function () {
             var options = {
                 path: '/some/path',
                 command: 2,
-                data_len: 8192,
                 server: '127.0.0.1',
                 port: 4304
             };

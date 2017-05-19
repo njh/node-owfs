@@ -57,7 +57,7 @@ describe('Integration Test', function () {
     var server;
     var port = 43041;
     before(function (done) {
-        server = startTestServer(port, 'DS18B20', done);
+        server = startTestServer(port, ['DS18B20', 'DS2413', 'DS2408'], done);
     });
 
     after(function () {
@@ -68,7 +68,11 @@ describe('Integration Test', function () {
         var client = new Client('127.0.0.1', port);
         client.dirall('/', function(err, result) {
             assert.equal(err, undefined);
-            assert.deepEqual(result, ['/28.000028D70000']);
+            assert.deepEqual(result, [
+                '/28.000028D70000',
+                '/3A.00003AC50100',
+                '/29.000029D60200'
+            ]);
             done();
         });
     });
@@ -78,6 +82,28 @@ describe('Integration Test', function () {
         client.read('/28.000028D70000/temperature', function(err, result) {
             assert.equal(err, undefined);
             assert.equal(result, '4');
+            done();
+        });
+    });
+
+    it('should write a 1-byte payload to a DS2413 device', function (done) {
+        var client = new Client('127.0.0.1', port);
+        client.write('/3A.00003AC50100/PIO.A', 1, function(err, result) {
+            assert.equal(err, undefined);
+            assert.equal(result.length, 1);
+            assert.equal(result[0].header.ret, 0);
+            assert.equal(result[0].header.size, 1);
+            done();
+        });
+    });
+
+    it('should write a 3-byte payload to a DS2408 device', function (done) {
+        var client = new Client('127.0.0.1', port);
+        client.write('/29.000029D60200/PIO.BYTE', 255, function(err, result) {
+            assert.equal(err, undefined);
+            assert.equal(result.length, 1);
+            assert.equal(result[0].header.ret, 0);
+            assert.equal(result[0].header.size, 3);
             done();
         });
     });
