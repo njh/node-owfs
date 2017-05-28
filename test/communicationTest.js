@@ -36,7 +36,6 @@ describe('Communication Test', function () {
   })
 
   describe('sending a command', function () {
-
     it('should open a connection to the server', function () {
       var options = {
         server: '127.0.0.1',
@@ -303,7 +302,5 @@ describe('Communication Test', function () {
         done()
       })
     })
-
   })
-
 })

@@ -44,7 +44,6 @@ function communicationWrite (value) {
 }
 
 describe('Basic Tests', function () {
-
   describe('Constructor', function () {
     it('should use host and port parameter', function (done) {
       communicationRead('23')
@@ -111,5 +110,4 @@ describe('Basic Tests', function () {
       })
     })
   })
-
 })

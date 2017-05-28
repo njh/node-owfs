@@ -39,7 +39,6 @@ var correct = {
 }
 
 describe('Convert Tests', function () {
-
   describe('preparePayload', function () {
     it('short convert true to the string "1"', function () {
       assert.equal(convert.preparePayload(true), '1')
@@ -135,7 +134,5 @@ describe('Convert Tests', function () {
         done()
       })(error, messages)
     })
-
   })
-
 })

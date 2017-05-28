@@ -50,7 +50,6 @@ var listingCommands = {
 }
 
 describe('Listing Tests', function () {
-
   Object.keys(listingCommands).forEach(function (command) {
     describe('#' + command + '()', function () {
       var res = stubWithPayload(payloadResult)()
@@ -84,5 +83,4 @@ describe('Listing Tests', function () {
       })
     })
   })
-
 })
