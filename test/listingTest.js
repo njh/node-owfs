@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-var assert = require('assert');
-var sinon = require('sinon');
-var Client = require('../lib/owfs').Client;
+var assert = require('assert')
+var sinon = require('sinon')
+var Client = require('../lib/owfs').Client
 
-var payloadResult = '/01.A7F1D92A82C8\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0011\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0010\u0000\u0000\u0000\u0000/10.D8FE434D9855\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0011\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0010\u0000\u0000\u0000\u0000/22.8CE2B3471711\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0011\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0010\u0000\u0000\u0000\u0000/29.98542F112D05\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0000\u0000\u0000';
+var payloadResult = '/01.A7F1D92A82C8\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0011\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0010\u0000\u0000\u0000\u0000/10.D8FE434D9855\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0011\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0010\u0000\u0000\u0000\u0000/22.8CE2B3471711\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0011\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0010\u0000\u0000\u0000\u0000/29.98542F112D05\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 \u0000\u0000\u0000\u0000\u0000\u0000'
 
 var testcases = [{
     payload: payloadResult,
@@ -18,7 +18,7 @@ var testcases = [{
     payload: '',
     listingEntries: 0,
     message: 'with emptyPayload '
-}];
+}]
 
 function stubWithPayload (payload) {
     return function () {
@@ -26,19 +26,19 @@ function stubWithPayload (payload) {
             sendCommand: function () {
 
             }
-        };
+        }
 
-        var sendCommandStub = sinon.stub(communicationStub, 'sendCommand');
+        var sendCommandStub = sinon.stub(communicationStub, 'sendCommand')
         sendCommandStub.callsArgWith(1, null, [{
             payload: payload
-        }]);
-        var owfs = new Client('blablub', 4304, communicationStub);
+        }])
+        var owfs = new Client('blablub', 4304, communicationStub)
 
         return {
             owfs: owfs,
             stub: sendCommandStub
-        };
-    };
+        }
+    }
 }
 
 var listingCommands = {
@@ -47,42 +47,42 @@ var listingCommands = {
     'get': 8,
     'dirallslash': 9,
     'getslash': 10
-};
+}
 
 describe('Listing Tests', function () {
 
     Object.keys(listingCommands).forEach(function (command) {
         describe('#' + command + '()', function () {
-            var res = stubWithPayload(payloadResult)();
-            var fun = listingCommands[command];
+            var res = stubWithPayload(payloadResult)()
+            var fun = listingCommands[command]
             it('should send (' + fun + ') command', function (done) {
                 res.owfs[command]('/some/path', function () {
-                    done();
-                });
-                assert.ok(res.stub.called);
+                    done()
+                })
+                assert.ok(res.stub.called)
                 sinon.assert.calledWith(res.stub, sinon.match({
                     command: fun,
                     server: 'blablub',
                     port: 4304,
                     path: '/some/path'
-                }));
-                res.stub.restore();
-            });
-        });
+                }))
+                res.stub.restore()
+            })
+        })
 
         describe('#' + command + '()', function () {
             testcases.forEach(function (testcase) {
                 it(testcase.message + 'should pass ' + testcase.listingEntries + ' directories to callback', function () {
-                    var res = stubWithPayload(testcase.payload)();
+                    var res = stubWithPayload(testcase.payload)()
                     res.owfs[command]('/some/path', function (error, directories) {
-                        assert.ok(!error);
-                        assert.ok(directories, 'directories');
-                        assert.equal(directories.length, testcase.listingEntries);
-                        res.stub.restore();
-                    });
-                });
-            });
-        });
-    });
+                        assert.ok(!error)
+                        assert.ok(directories, 'directories')
+                        assert.equal(directories.length, testcase.listingEntries)
+                        res.stub.restore()
+                    })
+                })
+            })
+        })
+    })
 
-});
+})

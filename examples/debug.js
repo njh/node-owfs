@@ -9,44 +9,44 @@
 
 */
 
-'use strict';
+'use strict'
 
-var Client = require('../lib/owfs').Client;
-var argv = require('optimist').argv;
-var HOST = argv.host || 'localhost';
-var PORT = argv.port || 4304;
+var Client = require('../lib/owfs').Client
+var argv = require('optimist').argv
+var HOST = argv.host || 'localhost'
+var PORT = argv.port || 4304
 
-console.log('Connecting to ' + HOST + ':' + PORT);
-var owfs = new Client(HOST, PORT);
+console.log('Connecting to ' + HOST + ':' + PORT)
+var owfs = new Client(HOST, PORT)
 
 owfs.dirall('/', function(err, result) {
     if (err) {
-        console.log('err: ' + err);
+        console.log('err: ' + err)
     } else {
-        console.log('dirall: ' + result);
+        console.log('dirall: ' + result)
     }
-});
+})
 
 /* owfs.get('/', function(err, result) {
     if (err) {
-        console.log('err: ' + err);
+        console.log('err: ' + err)
     } else {
-        console.log('get: ' + result);
+        console.log('get: ' + result)
     }
 }); */
 
 /* owfs.getslash('/', function(err, result) {
     if (err) {
-        console.log('err: ' + err);
+        console.log('err: ' + err)
     } else {
-        console.log('read: ' + result);
+        console.log('read: ' + result)
     }
 }); */
 
 /* owfs.read('/28.A7F1D92A82C8/temperature', function(err, result) {
     if (err) {
-        console.log('err: ' + err);
+        console.log('err: ' + err)
     } else {
-        console.log('read: ' + result);
+        console.log('read: ' + result)
     }
 }); */
