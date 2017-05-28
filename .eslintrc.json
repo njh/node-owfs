@@ -7,6 +7,7 @@
     "rules": {
         "no-control-regex": "off",
         "no-console": "off",
+        "comma-spacing": ["error", { "before": false, "after": true }],
         "curly": "error",
         "indent": ["error", 2, { "SwitchCase": 1 }],
         "key-spacing": ["error", { "beforeColon": false, "afterColon": true }],
@@ -14,6 +15,7 @@
         "space-infix-ops": "error",
         "padded-blocks": ["error", { "blocks": "never", "switches": "never", "classes": "never" }],
         "strict": "error",
+        
         "linebreak-style": [
             "error",
             "unix"
