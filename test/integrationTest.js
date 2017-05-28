@@ -52,7 +52,6 @@ function startTestServer (port, devices, callback) {
   return server
 }
 
-
 describe('Integration Test', function () {
   var server
   var port = 43041

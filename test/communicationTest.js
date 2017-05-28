@@ -5,7 +5,6 @@ var sinon = require('sinon')
 var net = require('net')
 var sendCommandToSocket = require('../lib/base/communication').sendCommandToSocket
 
-
 // Monkey patch to help with debugging Buffer comparison assertions
 ;(function (BufferToString) {
   Buffer.prototype.toString = function (encoding) {
@@ -24,7 +23,6 @@ var sendCommandToSocket = require('../lib/base/communication').sendCommandToSock
     }
   }
 })(Buffer.prototype.toString)
-
 
 describe('Communication Test', function () {
   beforeEach(function () {
