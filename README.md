@@ -28,7 +28,7 @@ read
 Reads a value of the specified path and passes the value to the callback.
 
     con.read("/10.E89C8A020800/temperature", function(err, result){
-        console.log(result)
+      console.log(result)
     })
 
 write
@@ -36,7 +36,7 @@ write
 Writes a value to the specified path and passes the raw owserver message to the callback.
 
     con.write("/3A.378A06000000/PIO.A", 1, function(err, message){
-        console.log(message)
+      console.log(message)
     })
 
 Directory listings
@@ -46,23 +46,23 @@ According to [OWFS message types](http://owfs.org/index.php?page=owserver-messag
 Lists all the children of the supplied path as an array passed to the callback.
 
     con.dir("/", function(err, directories){
-        console.log(directories)
+      console.log(directories)
     })
 
     con.dirall("/", function(err, directories){
-        console.log(directories)
+      console.log(directories)
     })
 
     con.get("/", function(err, directories){
-        console.log(directories)
+      console.log(directories)
     })
 
     con.dirallslash("/", function(err, directories){
-        console.log(directories)
+      console.log(directories)
     })
 
     con.getslash("/", function(err, directories){
-        console.log(directories)
+      console.log(directories)
     })
 
 Debug

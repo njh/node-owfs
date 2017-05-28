@@ -8,7 +8,7 @@
         "no-control-regex": "off",
         "no-console": "off",
         "curly": "error",
-        "indent": "error",
+        "indent": ["error", 2, { "SwitchCase": 1 }],
         "strict": "error",
         "linebreak-style": [
             "error",

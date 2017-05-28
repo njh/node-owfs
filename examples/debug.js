@@ -20,11 +20,11 @@ console.log('Connecting to ' + HOST + ':' + PORT)
 var owfs = new Client(HOST, PORT)
 
 owfs.dirall('/', function(err, result) {
-    if (err) {
-        console.log('err: ' + err)
-    } else {
-        console.log('dirall: ' + result)
-    }
+  if (err) {
+    console.log('err: ' + err)
+  } else {
+    console.log('dirall: ' + result)
+  }
 })
 
 /* owfs.get('/', function(err, result) {
