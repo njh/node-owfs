@@ -7,6 +7,13 @@
     "rules": {
         "no-control-regex": "off",
         "no-console": "off",
+        "comma-dangle": ["error", {
+          "arrays": "never",
+          "objects": "never",
+          "imports": "never",
+          "exports": "never",
+          "functions": "never"
+        }],
         "comma-spacing": ["error", { "before": false, "after": true }],
         "curly": "error",
         "indent": ["error", 2, { "SwitchCase": 1 }],
