@@ -14,9 +14,9 @@ function startTestServer (port, devices, callback) {
     '--foreground',
     '--nozero',
     '--Celsius',
-    '--port=127.0.0.1:'+port,
+    '--port=127.0.0.1:' + port,
     '--error_print=2',
-    '--tester='+devices
+    '--tester=' + devices
   ], {
     'stdio': 'inherit'
   })
@@ -38,15 +38,15 @@ function startTestServer (port, devices, callback) {
     })
 
     socket.on('error', function (err) {
-      console.log('Waiting longer for test server to start: '+err)
+      console.log('Waiting longer for test server to start: ' + err)
       if (count > 5) {
-        throw new Error('Failed to connect to owserver after '+count+' attempts')
+        throw new Error('Failed to connect to owserver after ' + count + ' attempts')
       }
     })
   }, 10)
 
   server.on('error', function (err) {
-    throw new Error('owserver error: '+err)
+    throw new Error('owserver error: ' + err)
   })
 
   return server

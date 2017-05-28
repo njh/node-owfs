@@ -10,6 +10,7 @@
         "curly": "error",
         "indent": ["error", 2, { "SwitchCase": 1 }],
         "space-before-function-paren": ["error", "always"],
+        "space-infix-ops": "error",
         "padded-blocks": ["error", { "blocks": "never", "switches": "never", "classes": "never" }],
         "strict": "error",
         "linebreak-style": [
