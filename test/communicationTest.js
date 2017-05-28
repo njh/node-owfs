@@ -7,8 +7,8 @@ var sendCommandToSocket = require('../lib/base/communication').sendCommandToSock
 
 
 // Monkey patch to help with debugging Buffer comparison assertions
-;(function(BufferToString) {
-  Buffer.prototype.toString = function(encoding) {
+;(function (BufferToString) {
+  Buffer.prototype.toString = function (encoding) {
     if (encoding === undefined) {
       var array = []
       for (var i = 0; i < this.length; i++) {
@@ -27,7 +27,7 @@ var sendCommandToSocket = require('../lib/base/communication').sendCommandToSock
 
 
 describe('Communication Test', function () {
-  beforeEach(function() {
+  beforeEach(function () {
     var version = Number(process.version.match(/^v(\d+\.\d+)/)[1])
     if (version < 4.0) {
             // These tests erroneously fails on old versions of node.js
@@ -46,7 +46,7 @@ describe('Communication Test', function () {
       var mock = sinon.mock(socket)
       mock.expects('connect').once().withExactArgs(4304, '127.0.0.1')
 
-      sendCommandToSocket(options, socket, function() {})
+      sendCommandToSocket(options, socket, function () {})
 
       mock.verify()
     })
@@ -60,7 +60,7 @@ describe('Communication Test', function () {
       }
       var socket = new net.Socket()
       var mock = sinon.mock(socket)
-      sinon.stub(socket, 'connect', function() {
+      sinon.stub(socket, 'connect', function () {
         socket.emit('connect')
       })
 
@@ -75,7 +75,7 @@ describe('Communication Test', function () {
       ])
       mock.expects('end').once().withExactArgs(expect)
 
-      sendCommandToSocket(options, socket, function() {})
+      sendCommandToSocket(options, socket, function () {})
 
       mock.verify()
     })
@@ -90,7 +90,7 @@ describe('Communication Test', function () {
       }
       var socket = new net.Socket()
       var mock = sinon.mock(socket)
-      sinon.stub(socket, 'connect', function() {
+      sinon.stub(socket, 'connect', function () {
         socket.emit('connect')
       })
 
@@ -106,7 +106,7 @@ describe('Communication Test', function () {
       ])
       mock.expects('end').once().withExactArgs(expect)
 
-      sendCommandToSocket(options, socket, function() {})
+      sendCommandToSocket(options, socket, function () {})
 
       mock.verify()
     })
@@ -129,12 +129,12 @@ describe('Communication Test', function () {
         0x00, 0x00, 0x00, 0x00,   // Offset for read or write
         0x20, 0x20, 0x20, 0x20, 0x20, 0x31, 0x37, 0x2e, 0x38, 0x31, 0x32, 0x35
       ])
-      sinon.stub(socket, 'connect', function() {
+      sinon.stub(socket, 'connect', function () {
         socket.emit('data', response)
         socket.emit('end')
       })
 
-      sendCommandToSocket(options, socket, function(err, messages) {
+      sendCommandToSocket(options, socket, function (err, messages) {
         assert.equal(err, undefined)
         assert.equal(messages.length, 1)
 
@@ -170,12 +170,12 @@ describe('Communication Test', function () {
         0x2e, 0x30, 0x30, 0x30, 0x30, 0x32, 0x38, 0x44, 0x37, 0x30,
         0x31, 0x30, 0x30, 0x00,
       ])
-      sinon.stub(socket, 'connect', function() {
+      sinon.stub(socket, 'connect', function () {
         socket.emit('data', response)
         socket.emit('end')
       })
 
-      sendCommandToSocket(options, socket, function(err, messages) {
+      sendCommandToSocket(options, socket, function (err, messages) {
         assert.equal(err, undefined)
         assert.equal(messages.length, 1)
 
@@ -216,14 +216,14 @@ describe('Communication Test', function () {
         0x00, 0x00, 0x00, 0x00,   // Offset for read or write
         0x20, 0x20, 0x20, 0x20, 0x20, 0x31, 0x37, 0x2e, 0x38, 0x31, 0x32, 0x35
       ])
-      sinon.stub(socket, 'connect', function() {
+      sinon.stub(socket, 'connect', function () {
         socket.emit('data', empty)
         socket.emit('data', empty)
         socket.emit('data', response)
         socket.emit('end')
       })
 
-      sendCommandToSocket(options, socket, function(err, messages) {
+      sendCommandToSocket(options, socket, function (err, messages) {
         assert.equal(err, undefined)
         assert.equal(messages.length, 3)
 
@@ -263,12 +263,12 @@ describe('Communication Test', function () {
         0x00, 0x00, 0x00, 0x00,   // Size of data
         0x00, 0x00, 0x00, 0x00,   // Offset for read or write
       ])
-      sinon.stub(socket, 'connect', function() {
+      sinon.stub(socket, 'connect', function () {
         socket.emit('data', response)
         socket.emit('end')
       })
 
-      sendCommandToSocket(options, socket, function(err, messages) {
+      sendCommandToSocket(options, socket, function (err, messages) {
         assert.equal(messages, undefined)
 
         assert(err !== undefined)
@@ -290,11 +290,11 @@ describe('Communication Test', function () {
       }
 
       var socket = new net.Socket()
-      sinon.stub(socket, 'connect', function() {
+      sinon.stub(socket, 'connect', function () {
         socket.emit('error', new Error('the was an error'))
       })
 
-      sendCommandToSocket(options, socket, function(err, messages) {
+      sendCommandToSocket(options, socket, function (err, messages) {
         assert.equal(messages, undefined)
 
         assert.equal(typeof err, 'object')

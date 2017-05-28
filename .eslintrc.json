@@ -9,6 +9,7 @@
         "no-console": "off",
         "curly": "error",
         "indent": ["error", 2, { "SwitchCase": 1 }],
+        "space-before-function-paren": ["error", "always"],
         "strict": "error",
         "linebreak-style": [
             "error",

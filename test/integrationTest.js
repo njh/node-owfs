@@ -5,7 +5,7 @@ var net = require('net')
 var Client = require('../lib/owfs').Client
 var spawn = require('child_process').spawn
 
-function startTestServer(port, devices, callback) {
+function startTestServer (port, devices, callback) {
   if (Array.isArray(devices)) {
     devices = devices.join(',')
   }
@@ -66,7 +66,7 @@ describe('Integration Test', function () {
 
   it('should read a list of directories', function (done) {
     var client = new Client('127.0.0.1', port)
-    client.dirall('/', function(err, result) {
+    client.dirall('/', function (err, result) {
       assert.equal(err, undefined)
       assert.deepEqual(result, [
         '/28.000028D70000',
@@ -79,7 +79,7 @@ describe('Integration Test', function () {
 
   it('should read a temperature from a DS18B20 device', function (done) {
     var client = new Client('127.0.0.1', port)
-    client.read('/28.000028D70000/temperature', function(err, result) {
+    client.read('/28.000028D70000/temperature', function (err, result) {
       assert.equal(err, undefined)
       assert.equal(result, '4')
       done()
@@ -88,7 +88,7 @@ describe('Integration Test', function () {
 
   it('should write a 1-byte payload to a DS2413 device', function (done) {
     var client = new Client('127.0.0.1', port)
-    client.write('/3A.00003AC50100/PIO.A', 1, function(err, result) {
+    client.write('/3A.00003AC50100/PIO.A', 1, function (err, result) {
       assert.equal(err, undefined)
       assert.equal(result.length, 1)
       assert.equal(result[0].header.ret, 0)
@@ -99,7 +99,7 @@ describe('Integration Test', function () {
 
   it('should write a 3-byte payload to a DS2408 device', function (done) {
     var client = new Client('127.0.0.1', port)
-    client.write('/29.000029D60200/PIO.BYTE', 255, function(err, result) {
+    client.write('/29.000029D60200/PIO.BYTE', 255, function (err, result) {
       assert.equal(err, undefined)
       assert.equal(result.length, 1)
       assert.equal(result[0].header.ret, 0)
@@ -110,7 +110,7 @@ describe('Integration Test', function () {
 
   it('should return an error for a non-existant device', function (done) {
     var client = new Client('127.0.0.1', port)
-    client.read('/28.000028D80000/temperature', function(err, result) {
+    client.read('/28.000028D80000/temperature', function (err, result) {
       assert(err.msg.match(/Communication Error/))
       assert.equal(err.header.ret, -1)
       assert.equal(result, undefined)
@@ -120,7 +120,7 @@ describe('Integration Test', function () {
 
   it('should return an error for badly named device', function (done) {
     var client = new Client('127.0.0.1', port)
-    client.read('foo/bar', function(err, result) {
+    client.read('foo/bar', function (err, result) {
       assert(err.msg.match(/Communication Error/))
       assert.equal(err.header.ret, -1)
       assert.equal(result, undefined)

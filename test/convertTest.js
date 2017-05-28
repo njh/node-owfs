@@ -61,7 +61,7 @@ describe('Convert Tests', function () {
   describe('extractValue', function () {
     it('should extract the value from one correct and one wrong message', function (done) {
       var messages = [correct, wrong]
-      convert.extractValue(function(err, result) {
+      convert.extractValue(function (err, result) {
         assert.equal(err, undefined)
         assert.equal(result, 22.375)
         done()
@@ -70,7 +70,7 @@ describe('Convert Tests', function () {
 
     it('should extract the value from one wrong and one correct message', function (done) {
       var messages = [wrong, correct]
-      convert.extractValue(function(err, result) {
+      convert.extractValue(function (err, result) {
         assert.equal(err, undefined)
         assert.equal(result, 22.375)
         done()
@@ -79,7 +79,7 @@ describe('Convert Tests', function () {
 
     it('should extract the value from a message with undefined payload and one correct message', function (done) {
       var messages = [withoutPayload, correct]
-      convert.extractValue(function(err, result) {
+      convert.extractValue(function (err, result) {
         assert.equal(err, undefined)
         assert.equal(result, 22.375)
         done()
@@ -88,7 +88,7 @@ describe('Convert Tests', function () {
 
     it('should pass an error to callback when there are no usable messages', function (done) {
       var messages = [withoutPayload, withoutPayload]
-      convert.extractValue(function(err, result) {
+      convert.extractValue(function (err, result) {
         assert.equal(err.msg, 'No usable messages received, but no error returned.')
         assert.equal(result, undefined)
         done()
@@ -98,7 +98,7 @@ describe('Convert Tests', function () {
     it('should pass an error to callback when there was an error', function (done) {
       var messages = []
       var error = new Error('there was an error')
-      convert.extractValue(function(err, result) {
+      convert.extractValue(function (err, result) {
         assert.equal(err.message, 'there was an error')
         assert.equal(result, undefined)
         done()
@@ -119,7 +119,7 @@ describe('Convert Tests', function () {
         },
         payload: '/28.000028D70000,/3A.00003AC50100'
       }]
-      convert.extractDirectories(function(err, result) {
+      convert.extractDirectories(function (err, result) {
         assert.equal(err, undefined)
         assert.deepEqual(result, [ '/28.000028D70000', '/3A.00003AC50100' ])
         done()
@@ -129,7 +129,7 @@ describe('Convert Tests', function () {
     it('should pass an error to callback when there was an error', function (done) {
       var messages = []
       var error = new Error('there was an error')
-      convert.extractDirectories(function(err, result) {
+      convert.extractDirectories(function (err, result) {
         assert.equal(err.message, 'there was an error')
         assert.equal(result, undefined)
         done()
