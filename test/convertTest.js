@@ -116,7 +116,7 @@ describe('Convert Tests', function () {
           size: 12,
           offset: 0
         },
-        payload: '/28.000028D70000,/3A.00003AC50100'
+        payload: '/28.000028D70000,/3A.00003AC50100\0'
       }]
       convert.extractDirectories(function (err, result) {
         assert.equal(err, undefined)
