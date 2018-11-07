@@ -66,6 +66,14 @@ Lists all the children of the supplied path as an array passed to the callback.
       console.log(directories)
     })
 
+Device presence
+---------------
+Check the availability of a single 1-Wire device using the OWFS message type *presence*. The device presence state is reported as boolean to the callback.
+
+    con.presence("/81.365F2F000000", function(err, result){
+      console.log(result)
+    })
+
 Debug
 =====
 We are using [debug] for debugging output. If you are using owfs in your app, start the debug mode like this:
