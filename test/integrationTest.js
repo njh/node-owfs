@@ -21,7 +21,7 @@ function startTestServer (port, devices, callback) {
     'stdio': 'inherit'
   })
 
-    // Wait for the server to start accepting connections
+  // Wait for the server to start accepting connections
   var count = 0
   var timer = setInterval(function () {
     count += 1
@@ -31,7 +31,7 @@ function startTestServer (port, devices, callback) {
       'port': port,
       'timeout': 5
     }, function () {
-            // Successfully connected
+      // Successfully connected
       socket.end()
       clearInterval(timer)
       callback()

@@ -5,7 +5,6 @@
     "mocha": true
   },
 
-  "_comment": "Waiting for Debian in include node.js 4.0.0 or higher",
   "rules": {
     "node/no-deprecated-api": "off"
   }
