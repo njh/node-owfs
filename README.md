@@ -5,6 +5,7 @@ owfs
 ====
 
 A [node.js] client library for 1-wire devices using the [owserver] protocol.
+Requires [node.js] version 6 or higher.
 
 Installation
 ============
