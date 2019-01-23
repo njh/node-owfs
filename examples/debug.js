@@ -12,7 +12,7 @@
 'use strict'
 
 var Client = require('../lib/owfs').Client
-var argv = require('optimist').argv
+var argv = require('minimist')(process.argv.slice(2))
 var HOST = argv.host || 'localhost'
 var PORT = argv.port || 4304
 
