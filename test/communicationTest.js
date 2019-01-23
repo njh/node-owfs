@@ -57,7 +57,7 @@ describe('Communication Test', function () {
       }
       var socket = new net.Socket()
       var mock = sinon.mock(socket)
-      sinon.stub(socket, 'connect', function () {
+      sinon.stub(socket, 'connect').callsFake(function () {
         socket.emit('connect')
       })
 
@@ -87,7 +87,7 @@ describe('Communication Test', function () {
       }
       var socket = new net.Socket()
       var mock = sinon.mock(socket)
-      sinon.stub(socket, 'connect', function () {
+      sinon.stub(socket, 'connect').callsFake(function () {
         socket.emit('connect')
       })
 
@@ -126,7 +126,7 @@ describe('Communication Test', function () {
         0x00, 0x00, 0x00, 0x00, // Offset for read or write
         0x20, 0x20, 0x20, 0x20, 0x20, 0x31, 0x37, 0x2e, 0x38, 0x31, 0x32, 0x35
       ])
-      sinon.stub(socket, 'connect', function () {
+      sinon.stub(socket, 'connect').callsFake(function () {
         socket.emit('data', response)
         socket.emit('end')
       })
@@ -167,7 +167,7 @@ describe('Communication Test', function () {
         0x2e, 0x30, 0x30, 0x30, 0x30, 0x32, 0x38, 0x44, 0x37, 0x30,
         0x31, 0x30, 0x30, 0x00
       ])
-      sinon.stub(socket, 'connect', function () {
+      sinon.stub(socket, 'connect').callsFake(function () {
         socket.emit('data', response)
         socket.emit('end')
       })
@@ -213,7 +213,7 @@ describe('Communication Test', function () {
         0x00, 0x00, 0x00, 0x00, // Offset for read or write
         0x20, 0x20, 0x20, 0x20, 0x20, 0x31, 0x37, 0x2e, 0x38, 0x31, 0x32, 0x35
       ])
-      sinon.stub(socket, 'connect', function () {
+      sinon.stub(socket, 'connect').callsFake(function () {
         socket.emit('data', empty)
         socket.emit('data', empty)
         socket.emit('data', response)
@@ -260,7 +260,7 @@ describe('Communication Test', function () {
         0x00, 0x00, 0x00, 0x00, // Size of data
         0x00, 0x00, 0x00, 0x00 // Offset for read or write
       ])
-      sinon.stub(socket, 'connect', function () {
+      sinon.stub(socket, 'connect').callsFake(function () {
         socket.emit('data', response)
         socket.emit('end')
       })
@@ -287,7 +287,7 @@ describe('Communication Test', function () {
       }
 
       var socket = new net.Socket()
-      sinon.stub(socket, 'connect', function () {
+      sinon.stub(socket, 'connect').callsFake(function () {
         socket.emit('error', new Error('the was an error'))
       })
 
