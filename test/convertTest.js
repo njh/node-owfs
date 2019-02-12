@@ -85,7 +85,7 @@ describe('Convert Tests', function () {
       })(null, messages)
     })
 
-    it('should retunrn null when message payload is null', function (done) {
+    it('should return null when message payload is null', function (done) {
       var messages = [{
         header: {
           version: 0,
