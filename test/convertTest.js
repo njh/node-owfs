@@ -85,6 +85,25 @@ describe('Convert Tests', function () {
       })(null, messages)
     })
 
+    it('should retunrn null when message payload is null', function (done) {
+      var messages = [{
+        header: {
+          version: 0,
+          payload: 0,
+          ret: 0,
+          controlflags: 0,
+          size: 0,
+          offset: 0
+        },
+        payload: null
+      }]
+      convert.extractValue(function (err, result) {
+        assert.equal(err, undefined)
+        assert.equal(result, null)
+        done()
+      })(null, messages)
+    })
+
     it('should pass an error to callback when there are no usable messages', function (done) {
       var messages = [withoutPayload, withoutPayload]
       convert.extractValue(function (err, result) {
